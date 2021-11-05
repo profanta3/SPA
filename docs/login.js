@@ -1,5 +1,7 @@
 //ID of the pannel to be displayed once loggin in 
 const _login_pannel_id = "login-pannel";
+//ID of the div where the Staff list should be displayed in
+const _stf_lst_pannel_id = "staff-list";
 //Admin credentials
 const _admin_id = "Admin";
 const _admin_pwd = "Admin";
@@ -59,7 +61,7 @@ function logout()
 function writeAdminPannel(_id)
 {
   document.getElementById(_id).innerHTML = 
-  "<hr><h2>Admin panel!</h2><br><button onclick='addStaff()' class='button'>Add Stuff</button><button onclick='deleteStaff()' class='button'>Delete Stuff</button><div id='staff-list'></div><br>";
+  "<hr><h2>Admin panel</h2><button onclick='addStaff()' class='button'>Add Stuff</button><button onclick='deleteStaff()' class='button'>Delete Stuff</button><hr><div id='staff-list'></div><br>";
 }
 
 /*
@@ -71,7 +73,7 @@ function addStaff() {
   staff_pw = "Stf-"+ id++ + "PW";
   staff_list.set(staff_id,staff_pw);
   _last_staff_id.push(staff_id);
-  staffChanged("staff-list");
+  staffChanged(_stf_lst_pannel_id);
 }
 
 /*
@@ -84,7 +86,7 @@ function deleteStaff() {
   }
   staff_list.delete(_last_staff_id.pop());
   id--;
-  staffChanged("staff-list");
+  staffChanged(_stf_lst_pannel_id);
 }
 
 /*
@@ -112,5 +114,5 @@ function staffChanged(cont, debug=false)
 function writeStaffPannel(_id, staff_name)
 {
   document.getElementById(_id).innerHTML = 
-  "<h2>Hello " + staff_name + "</h2>";
+  "<hr><h2>Staff panel</h2><hr><br>Hello " + staff_name + "";
 }

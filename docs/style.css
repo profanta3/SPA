@@ -19,10 +19,7 @@ body
 
 hr 
 {
-    width: 50%;
-    margin-left: 25%;
-    margin-right: 25%;
-    align-self: center;
+    color: #457B9D;
 }
 
 .button {
@@ -178,6 +175,12 @@ img {
 
 h1 
 {
+    padding: 10px;
+}
+
+h2
+{
+    font-size: 24px;
     padding: 10px;
 }
 
