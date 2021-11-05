@@ -59,7 +59,7 @@ function logout()
 function writeAdminPannel(_id)
 {
   document.getElementById(_id).innerHTML = 
-  "<hr><h2>Admin panel!</h2><br><button onclick='addStaff()' class='button'>Add Stuff</button><button onclick='deleteStaff()' class='button'>Delete Stuff</button><div  id='staff-list'></div><br>";
+  "<hr><h2>Admin panel!</h2><br><button onclick='addStaff()' class='button'>Add Stuff</button><button onclick='deleteStaff()' class='button'>Delete Stuff</button><div id='staff-list'></div><br>";
   //alert("Admin page laoded...");
   //document.getElementById("login-form").innerHTML = 
   //"<button onclick='logout()' class='button'>Logout</button>";
@@ -68,7 +68,7 @@ function writeAdminPannel(_id)
 function addStaff() {
   // Returns a random integer from 1 to 100:
   staff_id = "Staff-"+ id;
-  staff_pw = "Staff-"+ id++ + "PW!";
+  staff_pw = "Stf-"+ id++ + "PW";
   staff_list.set(staff_id,staff_pw);
   _last_staff_id.push(staff_id);
   staffChanged("staff-list");
@@ -84,13 +84,20 @@ function deleteStaff() {
   staffChanged("staff-list");
 }
 
-function staffChanged(cont)
+function staffChanged(cont, checker=false)
 {
-  s = "";
+  s = "( UID  |  PWD )<br>";
   for (const [key, value] of staff_list) {
     s += "(" + key+ " | " +value + ")<br>";
+  }
+  if(checker)
+  {
+    document.getElementById(cont).innerHTML = "<code id='debug-msg'>"+s+"</code>";
+  }
+  else
+  {
+    document.getElementById(cont).innerHTML = "<code>"+s+"</code>";
   } 
-  document.getElementById(cont).innerHTML = "<code>"+s+"</code>";
 }
 
 /*
