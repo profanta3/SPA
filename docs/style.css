@@ -47,6 +47,8 @@ h1
 }
 
 header {
+    display: flex;
+    flex-direction: row;
     background-color: #457B9D;
     color:darkorange;
     /*
@@ -54,15 +56,26 @@ header {
     */
     width: 100%;
     max-width: 100%;
-    
+    text-align: center;
     top: 0;
     left: 0;
-    height: 70px;
-    min-height: 70px;
+    height: 90px;
+    min-height: 90px;
     /*
     Quelle: https://community.atlassian.com/t5/Confluence-questions/Drop-shadow-CSS-on-header/qaq-p/1488228
     */
     box-shadow: 0 0 10px rgba(128,128,128,.8); /** the shadow */
+    justify-content: center;
+   text-align: center;
+   z-index: 0;
+}
+
+#subheader
+{
+    z-index: 1;
+    background-color: #A8DADC;
+    /*border-bottom: 1px solid #1D3557;*/
+    padding: 4px 0px;
 }
 
 #main-collumn
@@ -168,9 +181,32 @@ footer:hover {
 }
 
 img {
-    border: 2px solid brown;
-    box-shadow: 0 0 10px rgba(128,128,128,.8); /** the shadow */
-    margin: 10px;
+    /*border: 2px solid brown;
+    box-shadow: 0 0 10px rgba(128,128,128,.8); /** the shadow 
+    margin: 10px;*/
+    margin: 0px;
+    
+    width: 100px;
+    max-width: 100px;
+}
+
+#title
+{
+    order: 1;
+    font-size: 45px;
+    padding: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: #F1FAEE;
+}
+
+#logo
+{
+    order: 2;
+    height: 60px;
+    width: auto;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 h1 
