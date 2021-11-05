@@ -68,6 +68,21 @@ header {
     flex: 0 0 25%;
 }
 
+.input-box
+{
+    background-color:lightgoldenrodyellow;
+    border: none;
+    transition-duration: 0.2s;
+    margin: 5px;
+    padding: 5px;
+    font-size: 17px;
+}
+
+.input-box:hover
+{
+    background-color: ;
+}
+
 code
 {
     font-size: 15px;
