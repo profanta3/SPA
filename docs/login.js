@@ -9,7 +9,11 @@ const _staff_pwd = "Staff";
 
 var n = 3;
 
-const staff_list = [];
+var id = 0;
+
+var _last_staff_id = [];
+
+const staff_list = new Map();
 
 function check(form)/*function to check userid & password*/
 {
@@ -17,16 +21,22 @@ function check(form)/*function to check userid & password*/
  if(form.userid.value == _admin_id && form.pswrd.value == _admin_pwd)
   {
     //window.open('admin.html')/*opens the target page while Id & password matches*/
+    document.getElementById("login-form").style.display = "none";
     writeAdminPannel(_login_pannel_id);
+    document.getElementById("logout-btn").style.display = "inline";
     n = 3;
+    return;
   }
-  else if (form.userid.value == _staff_id && form.pswrd.value == _staff_pwd)
-  {
-    writeStaffPannel(_login_pannel_id);
-    n = 3;
+  for (const [key, value] of staff_list) {
+    if (form.userid.value == key && form.pswrd.value == value) 
+    {
+      document.getElementById("login-form").style.display = "none";
+      writeStaffPannel(_login_pannel_id, key);
+      document.getElementById("logout-btn").style.display = "inline";
+      n = 3;
+      return;
+    }
   }
- else
- {
    n--;
    if (n <= 0)
    {
@@ -34,12 +44,13 @@ function check(form)/*function to check userid & password*/
      form.innerHTML = "Locked out...";
     }
     alert("Login Credentials Incorrect.")/*displays error message*/
-  }
 }
 
 function logout()
 {
-  location.reload();
+  document.getElementById("login-form").style.display = "initial";
+  document.getElementById(_login_pannel_id).innerHTML = "";
+  document.getElementById("logout-btn").style.display = "none";
 }
 
 /*
@@ -48,34 +59,45 @@ function logout()
 function writeAdminPannel(_id)
 {
   document.getElementById(_id).innerHTML = 
-  "<iframe src='admin.html' seamless></iframe>";
+  "<h2>Admin panel!</h2><br><button onclick='addStaff()'>Add Stuff</button><button onclick='deleteStaff()'>Delete Stuff</button><div  id='staff-list'></div><br>";
   alert("Admin page laoded...");
-  document.getElementById("login-form").innerHTML = 
-  "<button onclick='logout()' class='button'>Logout</button>";
+  //document.getElementById("login-form").innerHTML = 
+  //"<button onclick='logout()' class='button'>Logout</button>";
 }
 
 function addStaff() {
-  staff_list.push("Kira")
-  staffChanged();
+  // Returns a random integer from 1 to 100:
+  staff_id = "Staff-"+ id;
+  staff_pw = "Staff-"+ id++ + "PW!";
+  staff_list.set(staff_id,staff_pw);
+  _last_staff_id.push(staff_id);
+  staffChanged("staff-list");
 }
 
 function deleteStaff() {
-  staff_list.pop();
-  staffChanged();
+  if (_last_staff_id.length == 0)
+  {
+    return;
+  }
+  staff_list.delete(_last_staff_id.pop());
+  id--;
+  staffChanged("staff-list");
 }
 
-function staffChanged()
+function staffChanged(cont)
 {
-  document.getElementById("staff-list").innerHTML = staff_list;
+  s = "";
+  for (const [key, value] of staff_list) {
+    s += "(" + key+ ", " +value + ")<br>";
+  } 
+  document.getElementById(cont).innerHTML = s;
 }
 
 /*
   Writes the Staff panel into the main html page
 */
-function writeStaffPannel(_id)
+function writeStaffPannel(_id, staff_name)
 {
   document.getElementById(_id).innerHTML = 
-  "<iframe src='staff.html' seamless></iframe>";
-  document.getElementById("login-form").innerHTML = 
-  "<button onclick='logout()' class='button'>Logout</button>";
+  "<h2>Hello " + staff_name + "</h2>";
 }

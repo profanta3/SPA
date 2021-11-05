@@ -9,6 +9,7 @@
         <h1>Welcome to SPA</h1>
     </header>
     <div class="main-content">
+        <button onclick='logout()' class='button' id="logout-btn" style="display: none;">Logout</button>
         <form name="login" id="login-form">
         Username<br><input type="text" name="userid"/><br>
         Password<br><input type="password" name="pswrd"/><br>
@@ -16,11 +17,13 @@
         <input type="reset" class="button" value="Cancel"/>
         </form>
         <div id="login-pannel"></div>
-        <div id='staff-list'></div>
+        <button type="button" class="button" onclick="staffChanged('debug-list')">Debug Show Staff</button>
+    <div id="debug-list"></div>
     </div>
+    
     <footer>
         <a href="#">help</a>
     </footer>
-    <script src="login.js"></script>
+    <script type="text/javascript" src="login.js"></script>
 </body>
 </html>
