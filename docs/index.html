@@ -6,20 +6,28 @@
     </head>
 <body>
     <header>
-        <h1>Welcome to SPA</h1>
+        <h1>~Welcome to SPA~</h1>
     </header>
     <div class="main-content">
-        <button onclick='logout()' class='button' id="logout-btn" style="display: none;">Logout</button>
-        <form name="login" id="login-form">
-        Username<br><input type="text" name="userid"/><br>
-        Password<br><input type="password" name="pswrd"/><br>
-        <input type="button" class="button" onclick="check(this.form)" value="Login"/>
-        <input type="reset" class="button" value="Cancel"/>
-        </form>
-        <div id="login-pannel"></div>
-        <hr>
-        <button type="button" class="button" onclick="staffChanged('debug-list')">Debug Show Staff</button>
-        <div id="debug-list"></div>
+        <div id="left-collumn">
+            <button onclick='logout()' class='button' id="logout-btn" style="display: none;">Logout</button>
+            <form name="login" id="login-form">
+                <p>Please login to acces our services!</p>
+                <br>
+            Username<br><input type="text" name="userid"/><br>
+            Password<br><input type="password" name="pswrd"/><br>
+            <input type="button" class="button" onclick="check(this.form)" value="Login"/>
+            <input type="reset" class="button" value="Cancel"/>
+            </form>
+        </div>
+        <div id="main-collumn">
+            <div id="login-pannel"></div>
+        </div>
+        <div id="debug-collumn">
+            <button type="button" class="button" onclick="staffChanged('debug-list')">Debug Show Staff</button>
+            <br>
+            <div id="debug-list"></div>
+        </div>
     </div>
     
     <footer>
