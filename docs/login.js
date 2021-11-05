@@ -60,7 +60,7 @@ function writeAdminPannel(_id)
 {
   document.getElementById(_id).innerHTML = 
   "<hr><h2>Admin panel!</h2><br><button onclick='addStaff()' class='button'>Add Stuff</button><button onclick='deleteStaff()' class='button'>Delete Stuff</button><div  id='staff-list'></div><br>";
-  alert("Admin page laoded...");
+  //alert("Admin page laoded...");
   //document.getElementById("login-form").innerHTML = 
   //"<button onclick='logout()' class='button'>Logout</button>";
 }

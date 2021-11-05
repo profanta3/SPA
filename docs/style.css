@@ -73,7 +73,6 @@ code
     font-size: 15px;
 }
 
-
 .main-content
 {
    
@@ -117,10 +116,10 @@ footer {
     color:darkorange;
     font-size: 20px;
     bottom: 0;
-    /*position: fixed;
+    position: fixed;
     
     width: 100%;
-    max-width: 100%;*/
+    max-width: 100%;
     left: 0;
     height: 30px;
     min-height: 30px;
@@ -128,7 +127,7 @@ footer {
     Quelle: https://community.atlassian.com/t5/Confluence-questions/Drop-shadow-CSS-on-header/qaq-p/1488228
     */
     box-shadow: 0 0 10px rgba(128,128,128,.8); /** the shadow */
-    visibility: hidden;
+    
 }
 
 footer:hover {
