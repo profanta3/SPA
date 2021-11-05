@@ -3,24 +3,22 @@ const _login_pannel_id = "login-pannel";
 //Admin credentials
 const _admin_id = "Admin";
 const _admin_pwd = "Admin";
-//staff credentials
-const _staff_id = "Staff";
-const _staff_pwd = "Staff";
 
+//number max incorrect logins till fail
 var n = 3;
 
 var id = 0;
-
 var _last_staff_id = [];
 
 const staff_list = new Map();
 
-function check(form)/*function to check userid & password*/
+/*
+  function to check userid & password
+*/
+function check(form)
 {
- /*the following code checkes whether the entered userid and password are matching*/
  if(form.userid.value == _admin_id && form.pswrd.value == _admin_pwd)
   {
-    //window.open('admin.html')/*opens the target page while Id & password matches*/
     document.getElementById("login-form").style.display = "none";
     writeAdminPannel(_login_pannel_id);
     document.getElementById("logout-btn").style.display = "inline";
@@ -39,11 +37,13 @@ function check(form)/*function to check userid & password*/
   }
    n--;
    if (n <= 0)
-   {
-     alert("Locked...")/*displays error message*/
+    {
+     //more than n times incorrect inputs
+     alert("Locked...")
      form.innerHTML = "Locked out...";
+     return;
     }
-    alert("Login Credentials Incorrect.")/*displays error message*/
+    alert("Login Credentials Incorrect.")
 }
 
 function logout()
@@ -60,11 +60,11 @@ function writeAdminPannel(_id)
 {
   document.getElementById(_id).innerHTML = 
   "<hr><h2>Admin panel!</h2><br><button onclick='addStaff()' class='button'>Add Stuff</button><button onclick='deleteStaff()' class='button'>Delete Stuff</button><div id='staff-list'></div><br>";
-  //alert("Admin page laoded...");
-  //document.getElementById("login-form").innerHTML = 
-  //"<button onclick='logout()' class='button'>Logout</button>";
 }
 
+/*
+  Adds Stuff to the stuff_list with generated UID and PW
+*/
 function addStaff() {
   // Returns a random integer from 1 to 100:
   staff_id = "Staff-"+ id;
@@ -74,6 +74,9 @@ function addStaff() {
   staffChanged("staff-list");
 }
 
+/*
+  Deletes the last stuff from stuff_list taht was created
+*/
 function deleteStaff() {
   if (_last_staff_id.length == 0)
   {
@@ -84,13 +87,16 @@ function deleteStaff() {
   staffChanged("staff-list");
 }
 
-function staffChanged(cont, checker=false)
+/*
+  Updates stuff list
+*/
+function staffChanged(cont, debug=false)
 {
   s = "( UID  |  PWD )<br>";
   for (const [key, value] of staff_list) {
     s += "(" + key+ " | " +value + ")<br>";
   }
-  if(checker)
+  if(debug)
   {
     document.getElementById(cont).innerHTML = "<code id='debug-msg'>"+s+"</code>";
   }

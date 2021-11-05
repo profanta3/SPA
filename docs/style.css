@@ -91,15 +91,11 @@ header {
     margin: 5px;
     padding: 5px;
     font-size: 17px;
-    color: #E63946;
+    color: black;
     /*
     Quelle: https://community.atlassian.com/t5/Confluence-questions/Drop-shadow-CSS-on-header/qaq-p/1488228
     */
     box-shadow: inset 0 0 5px rgba(128,128,128,.8); /** the shadow */
-}
-
-.input-box:hover
-{
 }
 
 code
@@ -162,8 +158,8 @@ footer {
     */
     box-shadow: 0 0 10px rgba(128,128,128,.8); /** the shadow */
     margin: 5px 0 0 0;
-    height: 20px;
-    max-height: 20px;
+    height: 18px;
+    max-height: 18px;
     bottom: 0;
 }
 
