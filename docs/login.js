@@ -4,8 +4,8 @@ const _login_pannel_id = "login-pannel";
 const _admin_id = "Admin";
 const _admin_pwd = "Admin";
 //staff credentials
-const _staff_id = "staff";
-const _staff_pwd = "password";
+const _staff_id = "Staff";
+const _staff_pwd = "Staff";
 
 var n = 3;
 
@@ -51,7 +51,7 @@ function writeAdminPannel(_id)
   "<iframe src='admin.html' seamless></iframe>";
   alert("Admin page laoded...");
   document.getElementById("login-form").innerHTML = 
-  "<button onclick='logout()'>Logout</button>";
+  "<button onclick='logout()' class='button'>Logout</button>";
 }
 
 function addStaff() {
@@ -75,6 +75,7 @@ function staffChanged()
 function writeStaffPannel(_id)
 {
   document.getElementById(_id).innerHTML = 
-  "<h2>Staff panel!</h2>";
-  alert("Staff page laoded...");
+  "<iframe src='staff.html' seamless></iframe>";
+  document.getElementById("login-form").innerHTML = 
+  "<button onclick='logout()' class='button'>Logout</button>";
 }

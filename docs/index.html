@@ -7,17 +7,13 @@
 <body>
     <header>
         <h1>Welcome to SPA</h1>
-        <ul>
-            <a href="#login">Login</a>
-            <a href="#">Projects</a>
-        </ul>
     </header>
-    <div id="main-content">
+    <div class="main-content">
         <form name="login" id="login-form">
-        Username<input type="text" name="userid"/>
-        Password<input type="password" name="pswrd"/>
-        <input type="button" onclick="check(this.form)" value="Login"/>
-        <input type="reset" value="Cancel"/>
+        Username<br><input type="text" name="userid"/><br>
+        Password<br><input type="password" name="pswrd"/><br>
+        <input type="button" class="button" onclick="check(this.form)" value="Login"/>
+        <input type="reset" class="button" value="Cancel"/>
         </form>
         <div id="login-pannel"></div>
         <div id='staff-list'></div>

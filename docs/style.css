@@ -1,39 +1,42 @@
-html {
-    text-align: center;
-    margin-left:auto;
-    margin-right:auto;
-    max-width: 700px;
-}
-
 * {
     color:brown;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    text-align: center;
+}
+
+.button {
+    margin: 8px 1px 5px 1px;
 }
 
 header {
     background-color: #F4F1DE;
     color:darkorange;
+    /*
     position: fixed;
+    */
     width: 100%;
     max-width: 100%;
+    
     top: 0;
     left: 0;
-    height: 120px;
-    min-height: 120px;
+    height: 50px;
+    min-height: 50px;
     /*
     Quelle: https://community.atlassian.com/t5/Confluence-questions/Drop-shadow-CSS-on-header/qaq-p/1488228
     */
     box-shadow: 0 0 10px rgba(128,128,128,.8); /** the shadow */
 }
 
-body {
-    margin: 0px;
-    margin-top: 25%;
-    margin-bottom: 50px;
-}
-
-#main-content
+.main-content
 {
-    margin-top: 130px;
+   
+   margin-top: 20px;
+   align-self: center;
+   vertical-align: middle
 }
 
 ul {
@@ -53,10 +56,11 @@ footer {
     text-align: center;
     color:darkorange;
     font-size: 20px;
-    position: fixed;
     bottom: 0;
+    /*position: fixed;
+    
     width: 100%;
-    max-width: 100%;
+    max-width: 100%;*/
     left: 0;
     height: 30px;
     min-height: 30px;
@@ -64,24 +68,11 @@ footer {
     Quelle: https://community.atlassian.com/t5/Confluence-questions/Drop-shadow-CSS-on-header/qaq-p/1488228
     */
     box-shadow: 0 0 10px rgba(128,128,128,.8); /** the shadow */
+    visibility: hidden;
 }
 
 footer:hover {
     color: white;
-}
-
-.hr1 {
-    padding-bottom: 0px;
-    margin-bottom: 0px;
-}
-
-.hr2 {
-    padding-top: 0px;
-    margin-top: 0px;
-}
-.hr3 {
-    margin: 0px;
-    padding: 0px;
 }
 
 img {
