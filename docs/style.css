@@ -75,6 +75,8 @@ header {
     justify-content: center;
    text-align: center;
    z-index: 0;
+
+   
 }
 
 #subheader
@@ -217,6 +219,8 @@ img {
     width: auto;
     margin-top: auto;
     margin-bottom: auto;
+
+    animation: 1s ease-out 0s 1 slideInFromTop;
 }
 
 h1 
@@ -234,3 +238,15 @@ h2
 {
     color: #E63946 !important;
 }
+
+/*
+    Animation Stuff...
+*/
+@keyframes slideInFromTop {
+    0% {
+      transform: translateY(-200%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
