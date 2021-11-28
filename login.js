@@ -22,7 +22,7 @@ function check(form)
  if(form.userid.value == _admin_id && form.pswrd.value == _admin_pwd)
   {
     document.getElementById("login-form").style.display = "none";
-    writeAdminPannel(_login_pannel_id);
+    writeAdminPannel();
     document.getElementById("logout-btn").style.display = "inline";
     n = 3;
     return;
@@ -58,10 +58,45 @@ function logout()
 /*
   Writes the Admin panel into the main html page
 */
-function writeAdminPannel(_id)
+function writeAdminPannel()
 {
-  document.getElementById(_id).innerHTML = 
-  "<hr><h2>Admin panel</h2><button onclick='addStaff()' class='button'>Add Stuff</button><button onclick='deleteStaff()' class='button'>Delete Stuff</button><hr><div id='staff-list'></div><br>";
+  var s = "";
+  s += "<hr><h2>Admin Panel</h2>";
+  s += "<div id='admin-btns'></div>";
+  s += "<hr><br>";
+  s += "<div id='staff-list'></div>";
+  document.getElementById("login-pannel").innerHTML = s;
+  //"<hr><h2>Admin panel</h2><button onclick='addStaff()' class='button'>Add Stuff</button><button onclick='deleteStaff()' class='button'>Delete Stuff</button><hr><div id='staff-list'></div><br>";
+  //"<hr><h2>Admin panel</h2><button onclick='addStaff()' class='button'>Students</button><button onclick='deleteStaff()' class='button'>Staffs</button><hr><div id='staff-list'></div><br>";
+  s = ""
+  s += "<button onclick='writeAdminStaffMenu()' class='button'>Staffs</button>";
+  s += "<button onclick='writeAdminStudentsMenu()' class='button'>Students</button>";
+  document.getElementById("admin-btns").innerHTML = s;
+}
+
+function writeAdminStudentsMenu()
+{
+  var s = ""
+  s += "<button onclick='writeAdminPannel()' class='button'>Back</button><br>";
+  s += "<button onclick='' class='button'>Add Student</button>";
+  s += "<button onclick='' class='button'>Update Student</button>";
+  s += "<button onclick='' class='button'>Delete Student</button>";
+
+  document.getElementById("admin-btns").innerHTML = s;
+  staffChanged(_stf_lst_pannel_id);
+
+}
+
+function writeAdminStaffMenu()
+{
+  var s = ""
+  s += "<button onclick='writeAdminPannel()' class='button'>Back</button><br>";
+  s += "<button onclick='addStaff()' class='button'>Add Staff</button>";
+  s += "<button onclick='' class='button'>Update Staff</button>";
+  s += "<button onclick='' class='button'>Delete Staff</button>";
+
+  document.getElementById("admin-btns").innerHTML = s;
+  staffChanged(_stf_lst_pannel_id);
 }
 
 /*
@@ -100,7 +135,14 @@ function staffChanged(cont, debug=false)
   }
   if(debug)
   {
-    document.getElementById(cont).innerHTML = "<code id='debug-msg'>"+s+"</code>";
+    if(document.getElementById(cont).innerHTML.length == 0)
+    {
+      document.getElementById(cont).innerHTML = "<code id='debug-msg'>"+s+"</code>";
+    }
+    else
+    {
+      document.getElementById(cont).innerHTML = "";
+    }
   }
   else
   {
