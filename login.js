@@ -64,6 +64,8 @@ function writeAdminPannel()
   s += "<hr><h2>Admin Panel</h2>";
   s += "<div id='admin-btns'></div>";
   s += "<hr><br>";
+  s += "<div id='addForm'></div><br>";
+  s += "<div id='StudentLoginForm'></div>";
   s += "<div id='staff-list'></div>";
   document.getElementById("login-pannel").innerHTML = s;
   //"<hr><h2>Admin panel</h2><button onclick='addStaff()' class='button'>Add Stuff</button><button onclick='deleteStaff()' class='button'>Delete Stuff</button><hr><div id='staff-list'></div><br>";
@@ -78,7 +80,7 @@ function writeAdminStudentsMenu()
 {
   var s = ""
   s += "<button onclick='writeAdminPannel()' class='button'>Back</button><br>";
-  s += "<button onclick='' class='button'>Add Student</button>";
+  s += "<button onclick='addNewStudentForm()' class='button'>Add Student</button>";
   s += "<button onclick='' class='button'>Update Student</button>";
   s += "<button onclick='' class='button'>Delete Student</button>";
 
@@ -97,6 +99,14 @@ function writeAdminStaffMenu()
 
   document.getElementById("admin-btns").innerHTML = s;
   staffChanged(_stf_lst_pannel_id);
+}
+
+function addNewStudentForm()
+{
+  //var s = "";
+  //s += "<h3>Add Student/ Staff</h3><br>";
+  //s += "<object type=text/html data='LoginForm.html'></object>";
+  document.getElementById("StudentLoginForm").innerHTML = document.getElementById("StudentLoginFormContent").innerHTML;
 }
 
 /*
@@ -146,8 +156,8 @@ function staffChanged(cont, debug=false)
   }
   else
   {
-    document.getElementById(cont).innerHTML = "<code>"+s+"</code>";
-  } 
+    document.getElementById(cont).innerHTML = "<hr><br><code>"+s+"</code>";
+  }
 }
 
 /*
