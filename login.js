@@ -13,7 +13,6 @@ var id = 0;
 var _last_staff_id = [];
 
 const staff_list = new Map();
-
 /*
   function to check userid & password
 */
@@ -106,7 +105,20 @@ function addNewStudentForm()
   //var s = "";
   //s += "<h3>Add Student/ Staff</h3><br>";
   //s += "<object type=text/html data='LoginForm.html'></object>";
-  document.getElementById("StudentLoginForm").innerHTML = document.getElementById("StudentLoginFormContent").innerHTML;
+  document.getElementById("StudentSignUpFormContainer").style.display = "Block";
+}
+
+var studentList = new Map();
+
+function createStudentForm()
+{
+    let form = new FormData(document.getElementById("cStudentForm"));
+
+    console.log("ID: "+form.get("student_id"));
+    var s = new Student(form.get("student_id"), form.get("fname"), form.get("lname"), form.get("dob"), form.get("gender-male"), form.get("department"), form.get("fname"), form.get("email_id"));
+    studentList.set(form.get("student_id"), s);
+
+    console.log(JSON.stringify(s));
 }
 
 /*
@@ -167,4 +179,18 @@ function writeStaffPannel(_id, staff_name)
 {
   document.getElementById(_id).innerHTML = 
   "<hr><h2>Staff panel</h2><hr><br>Hello " + staff_name + "";
+}
+
+class Student
+{
+    constructor(id, fname, lname, dob, gender, department, email)
+    {
+        this.id = id;
+        this.fname = fname;
+        this.lname = lname;
+        this.dob = dob;
+        this.gender = gender;
+        this.department = department;
+        this.email = email;
+    }
 }

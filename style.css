@@ -48,6 +48,12 @@ hr
     background-color: #1D3557;
 }
 
+
+.signup-button:hover
+{
+    background-color: #e63946;
+}
+
 h1
 {
     color: #F1FAEE;
@@ -77,6 +83,12 @@ header {
    z-index: 0;
 
    
+}
+
+#SignUpForm
+{
+    display: flex;
+
 }
 
 #subheader
@@ -119,6 +131,13 @@ header {
     */
     box-shadow: inset 0 0 5px rgba(128,128,128,.8); /** the shadow */
     font-family: monospace;
+    width: 80%;
+}
+
+#StudentSignUpFormContainer
+{
+    /*display: none;*/
+    
 }
 
 .input-box:hover
