@@ -63,28 +63,23 @@ function writeAdminPannel(layout=0)
 {
   var s = "";
   s += "<hr><h2>Admin Panel</h2>";
+  s += "<div id='backButtonPlaceholder'></div> ";
   s += "<div id='admin-btns'></div>";
   s += "<hr>";
-  s += "<div id='addForm'></div><br>";
+  s += "<div id='addForm'></div>";
   s += "<div id='StudentLoginForm'></div>";
   s += "<div id='staff-list'></div>";
   document.getElementById("login-pannel").innerHTML = s;
-  if (layout == 0) //dafualt admin layout
+  if (layout == 0) //dafault admin layout
   {
-    //"<hr><h2>Admin panel</h2><button onclick='addStaff()' class='button'>Add Stuff</button><button onclick='deleteStaff()' class='button'>Delete Stuff</button><hr><div id='staff-list'></div><br>";
-    //"<hr><h2>Admin panel</h2><button onclick='addStaff()' class='button'>Students</button><button onclick='deleteStaff()' class='button'>Staffs</button><hr><div id='staff-list'></div><br>";
     s = ""
     s += "<button onclick='writeAdminStaffMenu()' class='button'>Staffs</button>";
     s += "<button onclick='writeAdminStudentsMenu()' class='button'>Students</button>";
-    s += "<div id='backButtonPlaceholder'></div> ";
     document.getElementById("admin-btns").innerHTML = s;
   }
   else if(layout == 1) //layout for displaying signup forms
   {
-    s = "";
-    s += "<div id='backButtonPlaceholder'></div> ";
-    document.getElementById("admin-btns").innerHTML = s;
-    document.getElementById("backButtonPlaceholder").innerHTML = "<button onclick='writeAdminPannel()' class='button'>Back</button><br>";
+    //document.getElementById("backButtonPlaceholder").innerHTML = "<button onclick='writeAdminPannel()' class='button'>Back</button><br>";
   }
   document.getElementById("StudentSignUpFormContainer").style.display = "None";
 }
@@ -96,7 +91,7 @@ function writeAdminStudentsMenu()
   s += "<button onclick='addNewStudentForm()' class='button'>Add Student</button>";
   s += "<button onclick='' class='button'>Update Student</button>";
   s += "<button onclick='' class='button'>Delete Student</button>";
-  document.getElementById("backButtonPlaceholder").innerHTML = "<button onclick='writeAdminPannel()' class='button'>Back</button><br>";
+  document.getElementById("backButtonPlaceholder").innerHTML = "<button onclick='writeAdminPannel()' class='button'>Home</button><br>";
   document.getElementById("admin-btns").innerHTML = s;
 }
 
@@ -107,7 +102,7 @@ function writeAdminStaffMenu()
   s += "<button onclick='addStaff()' class='button'>Add Staff</button>";
   s += "<button onclick='' class='button'>Update Staff</button>";
   s += "<button onclick='' class='button'>Delete Staff</button>";
-  document.getElementById("backButtonPlaceholder").innerHTML = "<button onclick='writeAdminPannel()' class='button'>Back</button><br>";
+  document.getElementById("backButtonPlaceholder").innerHTML = "<button onclick='writeAdminPannel()' class='button'>Home</button><br>";
   document.getElementById("admin-btns").innerHTML = s;
 }
 
@@ -138,6 +133,7 @@ function createStudentForm()
 
     console.log(JSON.stringify(studentList));
     writeAdminPannel();
+    writeAdminStudentsMenu();
 }
 
 /*
