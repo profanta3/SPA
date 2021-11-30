@@ -13,6 +13,8 @@ var id = 0;
 var _last_staff_id = [];
 
 const staff_list = new Map();
+
+var studentList = new Map();
 /*
   function to check userid & password
 */
@@ -57,59 +59,75 @@ function logout()
 /*
   Writes the Admin panel into the main html page
 */
-function writeAdminPannel()
+function writeAdminPannel(layout=0)
 {
   var s = "";
   s += "<hr><h2>Admin Panel</h2>";
   s += "<div id='admin-btns'></div>";
-  s += "<hr><br>";
+  s += "<hr>";
   s += "<div id='addForm'></div><br>";
   s += "<div id='StudentLoginForm'></div>";
   s += "<div id='staff-list'></div>";
   document.getElementById("login-pannel").innerHTML = s;
-  //"<hr><h2>Admin panel</h2><button onclick='addStaff()' class='button'>Add Stuff</button><button onclick='deleteStaff()' class='button'>Delete Stuff</button><hr><div id='staff-list'></div><br>";
-  //"<hr><h2>Admin panel</h2><button onclick='addStaff()' class='button'>Students</button><button onclick='deleteStaff()' class='button'>Staffs</button><hr><div id='staff-list'></div><br>";
-  s = ""
-  s += "<button onclick='writeAdminStaffMenu()' class='button'>Staffs</button>";
-  s += "<button onclick='writeAdminStudentsMenu()' class='button'>Students</button>";
-  document.getElementById("admin-btns").innerHTML = s;
+  if (layout == 0) //dafualt admin layout
+  {
+    //"<hr><h2>Admin panel</h2><button onclick='addStaff()' class='button'>Add Stuff</button><button onclick='deleteStaff()' class='button'>Delete Stuff</button><hr><div id='staff-list'></div><br>";
+    //"<hr><h2>Admin panel</h2><button onclick='addStaff()' class='button'>Students</button><button onclick='deleteStaff()' class='button'>Staffs</button><hr><div id='staff-list'></div><br>";
+    s = ""
+    s += "<button onclick='writeAdminStaffMenu()' class='button'>Staffs</button>";
+    s += "<button onclick='writeAdminStudentsMenu()' class='button'>Students</button>";
+    s += "<div id='backButtonPlaceholder'></div> ";
+    document.getElementById("admin-btns").innerHTML = s;
+  }
+  else if(layout == 1) //layout for displaying signup forms
+  {
+    s = "";
+    s += "<div id='backButtonPlaceholder'></div> ";
+    document.getElementById("admin-btns").innerHTML = s;
+    document.getElementById("backButtonPlaceholder").innerHTML = "<button onclick='writeAdminPannel()' class='button'>Back</button><br>";
+  }
+  document.getElementById("StudentSignUpFormContainer").style.display = "None";
 }
 
 function writeAdminStudentsMenu()
 {
   var s = ""
-  s += "<button onclick='writeAdminPannel()' class='button'>Back</button><br>";
+  //s += "<button onclick='writeAdminPannel()' class='button'>Back</button><br>";
   s += "<button onclick='addNewStudentForm()' class='button'>Add Student</button>";
   s += "<button onclick='' class='button'>Update Student</button>";
   s += "<button onclick='' class='button'>Delete Student</button>";
-
+  document.getElementById("backButtonPlaceholder").innerHTML = "<button onclick='writeAdminPannel()' class='button'>Back</button><br>";
   document.getElementById("admin-btns").innerHTML = s;
-  staffChanged(_stf_lst_pannel_id);
-
 }
 
 function writeAdminStaffMenu()
 {
   var s = ""
-  s += "<button onclick='writeAdminPannel()' class='button'>Back</button><br>";
+  //s += "<button onclick='writeAdminPannel()' class='button'>Back</button><br>";
   s += "<button onclick='addStaff()' class='button'>Add Staff</button>";
   s += "<button onclick='' class='button'>Update Staff</button>";
   s += "<button onclick='' class='button'>Delete Staff</button>";
-
+  document.getElementById("backButtonPlaceholder").innerHTML = "<button onclick='writeAdminPannel()' class='button'>Back</button><br>";
   document.getElementById("admin-btns").innerHTML = s;
-  staffChanged(_stf_lst_pannel_id);
 }
 
+/**
+ * Adds the Form for adding students
+ */
 function addNewStudentForm()
 {
   //var s = "";
   //s += "<h3>Add Student/ Staff</h3><br>";
   //s += "<object type=text/html data='LoginForm.html'></object>";
+  writeAdminPannel(1);
   document.getElementById("StudentSignUpFormContainer").style.display = "Block";
 }
 
-var studentList = new Map();
 
+
+/**
+ * Called when a new student is added via the form
+ */
 function createStudentForm()
 {
     let form = new FormData(document.getElementById("cStudentForm"));
@@ -118,7 +136,8 @@ function createStudentForm()
     var s = new Student(form.get("student_id"), form.get("fname"), form.get("lname"), form.get("dob"), form.get("gender-male"), form.get("department"), form.get("fname"), form.get("email_id"));
     studentList.set(form.get("student_id"), s);
 
-    console.log(JSON.stringify(s));
+    console.log(JSON.stringify(studentList));
+    writeAdminPannel();
 }
 
 /*

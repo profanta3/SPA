@@ -29,7 +29,7 @@
         <div id="main-collumn">
             <div id="login-pannel"></div>
             <div id="StudentSignUpFormContainer">
-                <form class="SignUpForm" name="CreateStudentForm" id="cStudentForm" onsubmit="createStudentForm(this.form)" method="post">
+                <form class="SignUpForm" name="CreateStudentForm" id="cStudentForm" onsubmit="createStudentForm(this.form); this.reset(); return false;" method="post">
                     <h2>Sign Up a new Student</h2><br>
                     <label for="student_id">Student ID:</label><br>
                     <input type="text" class="input-box" name="student_id" id="student_id" required><br>
