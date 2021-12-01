@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
     <head>
+        <meta charset="utf-8"/>
         <link rel="stylesheet" href="style.css">
         <title>Login page</title>
     </head>
@@ -31,10 +32,10 @@
             <div id="StudentSignUpFormContainer">
                 <form class="SignUpForm" name="CreateStudentForm" id="cStudentForm" onsubmit="createStudentForm(this.form); this.reset(); return false;" method="post">
                     <h2>Sign Up a new Student</h2><br>
-                    <label for="student_id">Student ID:</label><br>
+                    <label for="student_id">*Student ID:</label><br>
                     <input type="text" class="input-box" name="student_id" id="student_id" required><br>
 
-                    <label for="fname">First Name:</label><br>
+                    <label for="fname">*First Name:</label><br>
                     <input type="text" class="input-box" name="fname" id="fname" required><br>
 
                     <label for="lname">Last Name:</label><br>
@@ -45,20 +46,20 @@
 
                     <label for="gender-radio">Gender:</label><br>
                     <label for="gender-male">Male</label>
-                    <input type="radio" name="gender-radio" id="gender-male">
+                    <input type="radio" selected="true" name="gender-radio" id="gender-male">
                     <label for="gender-female">Female</label>
                     <input type="radio" name="gender-radio" id="gender-female">
                     <label for="gender-other">Other</label>
                     <input type="radio" name="gender-radio" id="gender-other"><br>
 
-                    <label for="department">Department</label><br>
+                    <label for="department">*Department</label><br>
                     <select name="department" class="input-box" id="department">
                         <option id="department-it" selected="true">IT</option>
                         <option id="department-bio">Biology</option>
                         <option id="department-math">Mathematics</option>
                     </select><br>
 
-                    <label for="email_id">Email ID:</label><br>
+                    <label for="email_id">*Email ID:</label><br>
                     <input type="text" class="input-box" name="email_id" id="email_id" required><br>
 
                     <button type="submit" class="button signup-button" value="Submit">Bestätigen</button>

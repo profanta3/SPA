@@ -87,7 +87,6 @@ function writeAdminPannel(layout=0)
 function writeAdminStudentsMenu()
 {
   var s = ""
-  //s += "<button onclick='writeAdminPannel()' class='button'>Back</button><br>";
   s += "<button onclick='addNewStudentForm()' class='button'>Add Student</button>";
   s += "<button onclick='' class='button'>Update Student</button>";
   s += "<button onclick='' class='button'>Delete Student</button>";
@@ -98,7 +97,6 @@ function writeAdminStudentsMenu()
 function writeAdminStaffMenu()
 {
   var s = ""
-  //s += "<button onclick='writeAdminPannel()' class='button'>Back</button><br>";
   s += "<button onclick='addStaff()' class='button'>Add Staff</button>";
   s += "<button onclick='' class='button'>Update Staff</button>";
   s += "<button onclick='' class='button'>Delete Staff</button>";
@@ -111,9 +109,6 @@ function writeAdminStaffMenu()
  */
 function addNewStudentForm()
 {
-  //var s = "";
-  //s += "<h3>Add Student/ Staff</h3><br>";
-  //s += "<object type=text/html data='LoginForm.html'></object>";
   writeAdminPannel(1);
   document.getElementById("StudentSignUpFormContainer").style.display = "Block";
 }
@@ -134,6 +129,7 @@ function createStudentForm()
     console.log(JSON.stringify(studentList));
     writeAdminPannel();
     writeAdminStudentsMenu();
+    displayStudents();
 }
 
 /*
@@ -161,14 +157,27 @@ function deleteStaff() {
   staffChanged(_stf_lst_pannel_id);
 }
 
+function displayStudents()
+{
+  s = "|\tStudent ID\t|\tFirst Name\t|\tEmail\t|<br>";
+
+  for (const [key, student] of studentList) {
+    s += "|\t" + key+ "\t|\t" + student.getFName() + "\t|\t" + student.getEMail() +"\t|<br>";
+  }
+
+  document.getElementById(_stf_lst_pannel_id).innerHTML = "<hr><br><code>"+s+"</code>";
+}
+
 /*
   Updates stuff list
 */
 function staffChanged(cont, debug=false)
 {
-  s = "( UID  |  PWD )<br>";
+  s = "|\tStudent ID\t|\tFirst Name\t|\tEmail\t|<br>";
+
+
   for (const [key, value] of staff_list) {
-    s += "(" + key+ " | " +value + ")<br>";
+    s += "|\t" + key+ "\t|\t" +value + "\t|<br>";
   }
   if(debug)
   {
@@ -207,5 +216,39 @@ class Student
         this.gender = gender;
         this.department = department;
         this.email = email;
+    }
+
+    getFName() {
+      return this.fname;
+    }
+
+    getID()
+    {
+      return this.id;
+    }
+
+    getLName()
+    {
+      return this.lname;
+    }
+
+    getDOB()
+    {
+      return this.dob;
+    }
+
+    getGender()
+    {
+      return this.gender;
+    }
+
+    getDepartment()
+    {
+      return this.department;
+    }
+
+    getEMail()
+    {
+      return this.email;
     }
 }
