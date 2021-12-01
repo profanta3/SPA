@@ -92,6 +92,7 @@ function writeAdminStudentsMenu()
   s += "<button onclick='' class='button'>Delete Student</button>";
   document.getElementById("backButtonPlaceholder").innerHTML = "<button onclick='writeAdminPannel()' class='button'>Home</button><br>";
   document.getElementById("admin-btns").innerHTML = s;
+  displayStudents();
 }
 
 function writeAdminStaffMenu()
@@ -123,9 +124,10 @@ function createStudentForm()
     let form = new FormData(document.getElementById("cStudentForm"));
 
     console.log("ID: "+form.get("student_id"));
-    var s = new Student(form.get("student_id"), form.get("fname"), form.get("lname"), form.get("dob"), form.get("gender-male"), form.get("department"), form.get("fname"), form.get("email_id"));
+    var s = new Student(form.get("student_id"), form.get("fname"), form.get("lname"), form.get("dob"), form.get("gender-male"), form.get("department"), form.get("email_id"));
     studentList.set(form.get("student_id"), s);
 
+    localStorage.setItem(form.get("student_id"), JSON.stringify(s))
     console.log(JSON.stringify(studentList));
     writeAdminPannel();
     writeAdminStudentsMenu();
@@ -159,6 +161,28 @@ function deleteStaff() {
 
 function displayStudents()
 {
+  if(studentList.size == 0)
+  {
+    if(localStorage.length > 0)
+    {
+      
+      for (let i = 0; i < localStorage.length; i++) {
+        var obj = JSON.parse(localStorage.getItem(localStorage.key(i)));
+
+        console.log("Item to set: "+localStorage.key(i) + ", " + obj.getID());
+        studentList.set(localStorage.key(i), obj);
+      }
+    }
+    else 
+    {
+      console.log("Loal storage empty...");
+    }
+  }
+  else 
+  {
+    console.log("Student list not empty...");
+  }
+
   s = "|\tStudent ID\t|\tFirst Name\t|\tEmail\t|<br>";
 
   for (const [key, student] of studentList) {
