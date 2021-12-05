@@ -146,9 +146,15 @@ function writeAdminStudentsMenu()
   s += "<div id='dropdown-placeholder'/>";
   document.getElementById("backButtonPlaceholder").innerHTML = "<button onclick='writeAdminPannel()' class='button'>Home</button><br>";
   document.getElementById("admin-btns").innerHTML = s;
-  displayList();
   
   var parent = document.getElementById("dropdown-placeholder");
+
+  var filter_heading = document.createElement("h2");
+  filter_heading.innerHTML = "Filter Dataset:";
+  parent.appendChild(document.createElement("br"));
+  parent.appendChild(document.createElement("hr"));
+  parent.appendChild(filter_heading);
+
 
   var departments_set = new Set();
   departments_set.add("All");
@@ -202,8 +208,8 @@ function writeAdminStudentsMenu()
   }
 
   //adding event listeners...
-  selectListSemester.addEventListener('change', filterSemesterStudenListOutput);
-  selectList.addEventListener('change', filterDepartmentStudentListOutput);
+  selectListSemester.addEventListener('click', filterSemesterStudenListOutput);
+  selectList.addEventListener('click', filterDepartmentStudentListOutput);
   filterDepartmentStudentListOutput()
 }
 
@@ -228,17 +234,20 @@ function filterSemesterStudenListOutput() {
   var opt = document.getElementById("semester-select-list").options[document.getElementById("semester-select-list").selectedIndex];
 
   var array = Array.from(studentList.values()).filter((student) => {
-    var d = student.dob.split('-')[1];
-    if (d >= 10 && d <= 2 && opt.value == "Winter")
+    var d = parseInt(student.jdate.split('-')[1]);
+    if ((d >= 10 || d <= 2) && opt.value == "Winter")
     {
-      return student;
+      return true;
     }
     else if (d <= 8 && d >= 4 && opt.value == "Summer")
     {
-      return student;
+      return true;
+    }
+    else {
+      return false;
     }
   })
-
+  
   outputFilteredStudents(array);
 }
 
@@ -263,7 +272,7 @@ function outputFilteredStudents(students)
   {
     var listItem = document.createElement("li");  
     listItem.classList.add("person-view");
-    listItem.innerHTML = pre_array[key];
+    listItem.innerHTML = "<code style='font-weight: bold;'>"+pre_array[key]+"</code>";
     list.appendChild(listItem);
   }
 
@@ -278,7 +287,7 @@ function outputFilteredStudents(students)
     {
       var listItem = document.createElement("li");  
       listItem.classList.add("person-view");
-      listItem.innerHTML = array[i][key];
+      listItem.innerHTML = "<code>"+array[i][key]+"</code>";
       list.appendChild(listItem);
     }
     
@@ -352,7 +361,6 @@ function createStudentForm()
     console.log(JSON.stringify(new_student));
     writeAdminPannel();
     writeAdminStudentsMenu();
-    displayList(type="student");
 }
 
 /**
@@ -391,7 +399,6 @@ function createStudentForm()
     console.log(JSON.stringify(new_staff));
     writeAdminPannel();
     writeAdminStaffMenu();
-    displayList(type="staff")
  }
 
  function validateStaffForm(form_id) {
@@ -440,55 +447,6 @@ function deleteStaff() {
   id--;
   staffChanged(_stf_lst_pannel_id);
 }
-
-function displayList(type="student")
-{
-  if(studentList.size == 0)
-  {
-    /*if(localStorage.length > 0)
-    {
-      
-      for (let i = 0; i < localStorage.length; i++) {
-        var obj = JSON.parse(localStorage.getItem(localStorage.key(i)));
-
-        console.log("Item to set: "+localStorage.key(i) + ", " + obj.getID());
-        studentList.set(localStorage.key(i), obj);
-      }
-    }
-    else 
-    {
-      console.log("Loal storage empty...");
-    }*/
-  }
-  else 
-  {
-    console.log("Student list not empty...");
-  }
-  if(type == "staff")
-  {
-    s = "|\tSaff ID\t|\tFirst Name\t|\tLast Name\t|\tDOB\t|\tGender\t|\tEmail\t|\tJoining Date\t|<br>";
-    for (const [key, staff] of staffList) {
-      s += "|\t" + key + "\t|\t" + staff.getFName() + "\t|\t" + staff.getLName() + "\t|\t" + staff.getDOB() + "\t|\t" + staff.getGender() + "\t|\t" + staff.getEMail() + "\t|\t" + staff.getJDate() + "\t|<br>";
-    }
-  }
-  else
-  {
-    s = "|\Student ID\t|\tFirst Name\t|\tLast Name\t|\tDOB\t|\tGender\t|\tDepartment\t|\tEmail\t|\tJoining Date\t|<br>";
-    for (const [key, student] of studentList) {
-      s += "|\t" + key + "\t|\t" + student.getFName() + "\t|\t" + student.getLName() + "\t|\t" + student.getDOB() + "\t|\t" + student.getGender() + "\t|\t" + student.getDepartment() + "\t|\t" +student.getEMail() + "\t|\t" + student.getJDate() + "\t|<br>";
-    }
-    /*for (const [key, student] of studentList) {
-      s += "|\t" + key + "\t|\t" + student.fname + "\t|\t" + student.lname + "\t|\t" + student.dob + "\t|\t" + student.gender + "\t|\t" + student.department + "\t|\t" +student.email + "\t|\t" + student.jdate + "\t|<br>";
-    }*/
-  }
-
-  document.getElementById(_stf_lst_pannel_id).innerHTML = "<hr><br><code>"+s+"</code>";
-
-  //var fs = require('fs');
-  //fs.writeFile('staffs.json', json, 'utf8', callback);
-}
-
-
 
 /*
   Updates stuff list
