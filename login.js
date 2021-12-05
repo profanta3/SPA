@@ -113,9 +113,32 @@ function writeAdminStudentsMenu()
   s += "<button onclick='addNewStudentForm()' class='button'>Add Student</button>";
   s += "<button onclick='' class='button'>Update Student</button>";
   s += "<button onclick='' class='button'>Delete Student</button>";
+  s += "<div id='dropdown-placeholder'/>"; 
   document.getElementById("backButtonPlaceholder").innerHTML = "<button onclick='writeAdminPannel()' class='button'>Home</button><br>";
   document.getElementById("admin-btns").innerHTML = s;
   displayList();
+  
+  var parent = document.getElementById("dropdown-placeholder");
+
+  var departments_set = new Set();
+  studentList.forEach((element, key) => {
+    departments_set.add(element.getDepartment());
+    console.log("add: "+element.getDepartment());
+  });
+  if (departments_set.size < 1) {return;}
+  console.log(departments_set);
+  var selectList = document.createElement("select");
+  selectList.id = "department-select-list";
+
+  parent.appendChild(selectList);
+  var array = Array.from(departments_set);
+
+  for (let i = 0; i < array.length; i++) {
+    var option = document.createElement("option");
+    option.value = array[i];
+    option.text = array[i];
+    selectList.appendChild(option);
+  }
 }
 
 function writeAdminStaffMenu()
@@ -151,17 +174,39 @@ function addNewStudentForm()
  */
 function createStudentForm()
 {
+    if (!validateStaffForm("cStudentForm"))
+    {
+      alert("Invalid DOB");
+      return true;
+    }
     let form = new FormData(document.getElementById("cStudentForm"));
+ 
+    //console.log("ID: "+form.get("staff_id"));
 
-    console.log("ID: "+form.get("student_id"));
-    var s = new Student(form.get("student_id"), form.get("fname"), form.get("lname"), form.get("student-dob"), form.get("gender-male"), form.get("department"), form.get("email_id"));
-    studentList.set(form.get("student_id"), s);
+    var today = new Date();
 
-    localStorage.setItem(form.get("student_id"), JSON.stringify(s))
-    console.log(JSON.stringify(studentList));
+    let new_student_raw = {
+      id: form.get("student_id"),
+      fname: form.get("fname"),
+      lname: form.get("lname"),
+      dob: form.get("student-dob"),
+      gender: form.get("gender-male"),
+      department: form.get("department"),
+      email: form.get("email_id"),
+      jdate: wrapDate(today)
+    }
+    
+    let new_student = Student.from(new_student_raw);
+
+    studentList.set(new_student_raw.id, new_student);
+
+    localStorage.setItem("student", JSON.stringify(new_student))
+
+    studentList.forEach( (value, key) => console.log("Key: "+key + " Value: "+ value));
+    console.log(JSON.stringify(new_student));
     writeAdminPannel();
     writeAdminStudentsMenu();
-    displayList();
+    displayList(type="student");
 }
 
 /**
@@ -195,7 +240,7 @@ function createStudentForm()
     //var s = new Student(form.get("student_id"), form.get("fname"), form.get("lname"), form.get("dob"), form.get("gender-male"), form.get("department"), form.get("email_id"));
     staffList.set(new_staff_raw.id, new_staff);
  
-    localStorage.setItem(new_staff_raw.id, JSON.stringify(new_staff))
+    localStorage.setItem("staff", JSON.stringify(new_staff))
     console.log(JSON.stringify(staffList));
     console.log(JSON.stringify(new_staff));
     writeAdminPannel();
@@ -278,16 +323,19 @@ function displayList(type="student")
   }
   else
   {
-    s = "|\Student ID\t|\tFirst Name\t|\tLast Name\t|\tDOB\t|\tGender\t|\tEmail\t|\tJoining Date\t|<br>";
+    s = "|\Student ID\t|\tFirst Name\t|\tLast Name\t|\tDOB\t|\tGender\t|\tDepartment\t|\tEmail\t|\tJoining Date\t|<br>";
     for (const [key, student] of studentList) {
-      s += "|\t" + key + "\t|\t" + student.getFName() + "\t|\t" + student.getLName() + "\t|\t" + student.getDOB() + "\t|\t" + student.getGender() + "\t|\t" + student.getEMail() + "\t|\t" + student.getJDate() + "\t|<br>";
+      s += "|\t" + key + "\t|\t" + student.getFName() + "\t|\t" + student.getLName() + "\t|\t" + student.getDOB() + "\t|\t" + student.getGender() + "\t|\t" + student.getDepartment() + "\t|\t" +student.getEMail() + "\t|\t" + student.getJDate() + "\t|<br>";
     }
+    /*for (const [key, student] of studentList) {
+      s += "|\t" + key + "\t|\t" + student.fname + "\t|\t" + student.lname + "\t|\t" + student.dob + "\t|\t" + student.gender + "\t|\t" + student.department + "\t|\t" +student.email + "\t|\t" + student.jdate + "\t|<br>";
+    }*/
   }
 
   document.getElementById(_stf_lst_pannel_id).innerHTML = "<hr><br><code>"+s+"</code>";
 
-  var fs = require('fs');
-  fs.writeFile('staffs.json', json, 'utf8', callback);
+  //var fs = require('fs');
+  //fs.writeFile('staffs.json', json, 'utf8', callback);
 }
 
 
