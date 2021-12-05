@@ -20,7 +20,7 @@ var staffList = new Map();
 /*
   Load Students from JSON file...
 */
-function loadJSON(callback)
+function loadJSONStudents(callback, addr)
 {
 
   var xhr = new XMLHttpRequest();
@@ -36,12 +36,40 @@ function loadJSON(callback)
   xhr.send();
 }
 
-loadJSON(function(response) {
+/*
+  Load Staffs from JSON file...
+*/
+function loadJSONStaffs(callback, addr)
+{
+
+  var xhr = new XMLHttpRequest();
+  xhr.overrideMimeType("application/json");
+  xhr.open('GET', 'https://raw.githubusercontent.com/profanta3/SPA/main/staffs.json', true);
+  
+  xhr.onreadystatechange = function() {
+    if(xhr.readyState == 4 && xhr.status == "200" )
+    {
+      callback(xhr.responseText)
+    }
+  }
+  xhr.send();
+}
+
+loadJSONStudents(function(response) {
   var actual_JSON = JSON.parse(response);
   console.log(actual_JSON);
   for (let i = 0; i < actual_JSON.length; i++) {
     let new_student = Student.from(actual_JSON[i])
     studentList.set(actual_JSON[i].id, new_student);
+  }
+})
+
+loadJSONStaffs(function(response) {
+  var actual_JSON = JSON.parse(response);
+  console.log(actual_JSON);
+  for (let i = 0; i < actual_JSON.length; i++) {
+    let new_staff = Staff.from(actual_JSON[i])
+    staffList.set(actual_JSON[i].id, new_staff);
   }
 })
 
@@ -220,8 +248,8 @@ function writeAdminStudentsMenu()
     selectListSemester.addEventListener('click', filterSemesterStudenListOutput);
     selectList.addEventListener('click', filterDepartmentStudentListOutput);  
   }
+  filterDepartmentStudentListOutput();
 }
-
 
 function filterDepartmentStudentListOutput() {
   
@@ -233,8 +261,6 @@ function filterDepartmentStudentListOutput() {
   else {
     var array = Array.from(studentList.values());
   }
-
-  
 
   outputFilteredStudents(array);
 }
@@ -313,6 +339,8 @@ function writeAdminStaffMenu()
   s += "<button onclick='' class='button'>Delete Staff</button>";
   document.getElementById("backButtonPlaceholder").innerHTML = "<button onclick='writeAdminPannel()' class='button'>Home</button><br>";
   document.getElementById("admin-btns").innerHTML = s;
+
+  outputFilteredStudents(Array.from(staffList.values()));
 }
 
 /**
@@ -399,13 +427,25 @@ function createStudentForm()
     //console.log("ID: "+form.get("staff_id"));
 
     var today = new Date();
+    var gen_gender = "";
+    if (form.get("gender-male") == true)
+    {
+      gender = "male";
+    }
+    else if(form.get("gender-female") == true)
+    {
+      gender = "female"
+    }
+    else {
+      gender = "other";
+    }
 
     let new_staff_raw = {
       id: form.get("staff_id"),
       fname: form.get("fname"),
       lname: form.get("lname"),
       dob: form.get("staff-dob"),
-      gender: form.get("gender-male"),
+      gender: gen_gender,
       email: form.get("email_id"),
       jdate: wrapDate(today)
     }
@@ -435,10 +475,6 @@ function createStudentForm()
    }
    return true;
  }
-
-function generateListViewString() {
-  
-}
 
 /*
   Adds Stuff to the stuff_list with generated UID and PW

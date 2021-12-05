@@ -1,0 +1,56 @@
+[
+    {
+        "id": "s01",
+        "fname": "Peter",
+        "lname": "Siemens",
+        "dob": "1980-02-14",
+        "gender": "male",
+        "email": "peter@staffs.de",
+        "jdate": "2021-11-11"
+    },
+    {
+        "id": "s02",
+        "fname": "Hans",
+        "lname": "Volkswagen",
+        "dob": "1970-01-08",
+        "gender": "male",
+        "email": "hans@staffs.de",
+        "jdate": "2021-02-10"
+    },
+    {
+        "id": "s03",
+        "fname": "Mona",
+        "lname": "Lisa",
+        "dob": "1975-02-14",
+        "gender": "female",
+        "email": "mona@staffs.de",
+        "jdate": "2021-12-01"
+    },
+    {
+        "id": "s04",
+        "fname": "Gallileo",
+        "lname": "Gallilei",
+        "dob": "1972-10-07",
+        "gender": "male",
+        "email": "gal@staffs.de",
+        "jdate": "2021-18-04"
+    },
+    {
+        "id": "s03",
+        "fname": "Jack",
+        "lname": "Sparrow",
+        "dob": "1975-02-07",
+        "gender": "pirate",
+        "email": "jack@staffs.de",
+        "jdate": "2020-06-01"
+    },
+    {
+        "id": "s03",
+        "fname": "Han",
+        "lname": "Solo",
+        "dob": "1977-08-11",
+        "gender": "male",
+        "email": "han@staffs.de",
+        "jdate": "2021-11-18"
+    }
+]
