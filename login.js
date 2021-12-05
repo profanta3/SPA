@@ -178,7 +178,7 @@ function writeAdminStudentsMenu()
   var s = ""
   s += "<button onclick='addNewStudentForm()' class='button'>Add Student</button>";
   s += "<button onclick='' class='button'>Update Student</button>";
-  s += "<button onclick='' class='button'>Delete Student</button>";
+  s += "<button onclick='deleteStudent()' class='button'>Delete Student</button>";
   s += "<div id='dropdown-placeholder'/>";
   document.getElementById("backButtonPlaceholder").innerHTML = "<button onclick='writeAdminPannel()' class='button'>Home</button><br>";
   document.getElementById("admin-btns").innerHTML = s;
@@ -367,7 +367,7 @@ function writeAdminStaffMenu()
   var s = ""
   s += "<button onclick='addNewStaffForm()' class='button'>Add Staff</button>";
   s += "<button onclick='' class='button'>Update Staff</button>";
-  s += "<button onclick='deleteStaff' class='button'>Delete Staff</button>";
+  s += "<button onclick='deleteStaff()' class='button'>Delete Staff</button>";
   document.getElementById("backButtonPlaceholder").innerHTML = "<button onclick='writeAdminPannel()' class='button'>Home</button><br>";
   document.getElementById("admin-btns").innerHTML = s;
 
@@ -513,13 +513,40 @@ function createStudentForm()
   Deletes the last stuff from stuff_list taht was created
 */
 function deleteStaff() {
-  if (_last_staff_id.length == 0)
+  check = prompt("Type in the ID of the user you want to delete...", '');
+  
+  if (staffList.has(check))
   {
-    return;
+    if (window.confirm("Are you sure you want to delete user: "+staffList.get(check).getFName() + " with ID: "+staffList.get(check).getID() + "?"))
+    {
+      staffList.delete(check);
+    }
   }
-  staff_list.delete(_last_staff_id.pop());
-  id--;
-  staffChanged(_stf_lst_pannel_id);
+  else
+  {
+    alert("User with ID: "+check + " doesnt exists.");
+  }
+  writeAdminStaffMenu();
+}
+
+/*
+  Deletes the last stuff from stuff_list taht was created
+*/
+function deleteStudent() {
+  check = prompt("Type in the ID of the user you want to delete...", '');
+  
+  if (studentList.has(check))
+  {
+    if (window.confirm("Are you sure you want to delete user: "+studentList.get(check).getFName() + " with ID: "+studentList.get(check).getID() + "?"))
+    {
+      studentList.delete(check);
+    }
+  }
+  else
+  {
+    alert("User with ID: "+check + " doesnt exists.");
+  }
+  writeAdminStudentsMenu();
 }
 
 class Staff
