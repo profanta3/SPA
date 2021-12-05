@@ -59,6 +59,7 @@ document.getElementById("staff-dob").setAttribute("max", date);
 document.getElementById("student-dob").setAttribute("value", date);
 document.getElementById("staff-dob").setAttribute("value", date);
 
+
 function wrapDate(date) {
   return date.getFullYear() + '-'
   + ('0' + (date.getMonth()+1)).slice(-2) + '-'
@@ -150,7 +151,7 @@ function writeAdminStudentsMenu()
   var parent = document.getElementById("dropdown-placeholder");
 
   var departments_set = new Set();
-  departments_set.add("Select");
+  departments_set.add("All");
 
   studentList.forEach((element, key) => {
     departments_set.add(element.getDepartment());
@@ -203,15 +204,47 @@ function writeAdminStudentsMenu()
   //adding event listeners...
   selectListSemester.addEventListener('change', filterSemesterStudenListOutput);
   selectList.addEventListener('change', filterDepartmentStudentListOutput);
+  filterDepartmentStudentListOutput()
 }
 
+
 function filterDepartmentStudentListOutput() {
-  console.log("changed...");
   
   var opt = document.getElementById("department-select-list").options[document.getElementById("department-select-list").selectedIndex];
   
-  var array = Array.from(studentList.values()).filter(student => student.department == opt.value);
-  console.log(array);
+  if (opt.value != "All") {
+    var array = Array.from(studentList.values()).filter(student => student.department == opt.value);
+  } 
+  else {
+    var array = Array.from(studentList.values());
+  }
+
+  
+
+  outputFilteredStudents(array);
+}
+
+function filterSemesterStudenListOutput() {
+  var opt = document.getElementById("semester-select-list").options[document.getElementById("semester-select-list").selectedIndex];
+
+  var array = Array.from(studentList.values()).filter((student) => {
+    var d = student.dob.split('-')[1];
+    if (d >= 10 && d <= 2 && opt.value == "Winter")
+    {
+      return student;
+    }
+    else if (d <= 8 && d >= 4 && opt.value == "Summer")
+    {
+      return student;
+    }
+  })
+
+  outputFilteredStudents(array);
+}
+
+function outputFilteredStudents(students)
+{
+  array = students;
 
   if (document.getElementById("table-div"))
   {
@@ -220,19 +253,30 @@ function filterDepartmentStudentListOutput() {
   var div = document.createElement("div");
   div.classList.add("table");
   div.id = "table-div";
+
+  var list = document.createElement("ul");
+  list.classList.add("person-view");
+
+  var pre_array = ["ID", "First Name", "Last Name", "DOB", "Gender", "Department", "Email", "Join-Date"];
+
+  for(key in pre_array)
+  {
+    var listItem = document.createElement("li");  
+    listItem.classList.add("person-view");
+    listItem.innerHTML = pre_array[key];
+    list.appendChild(listItem);
+  }
+
+  div.appendChild(list);
+  document.getElementById("filtered-list-placeholder").appendChild(div);
   
-  for (let i = 0; i < array.length; i++) {
-    
+  for (let i = 0; i < array.length; i++) { 
     var list = document.createElement("ul");
     list.classList.add("person-view");
 
-    //for (let j = 0; j < array[0]; j++) {
-      //}
-      
     for(key in array[i])
     {
       var listItem = document.createElement("li");  
-      listItem.id = "student-view";
       listItem.classList.add("person-view");
       listItem.innerHTML = array[i][key];
       list.appendChild(listItem);
@@ -241,12 +285,6 @@ function filterDepartmentStudentListOutput() {
     div.appendChild(list);
     document.getElementById("filtered-list-placeholder").appendChild(div);
   }
-
-  
-}
-
-function filterSemesterStudenListOutput() {
-  //console.log("changed...");
 }
 
 function writeAdminStaffMenu()

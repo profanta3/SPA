@@ -58,5 +58,55 @@
         "department": "IT",
         "email": "max@kalria.de",
         "jdate": "2021-12-03"
+    },
+    {
+        "id": "s07",
+        "fname": "Korinna",
+        "lname": "Baum",
+        "dob": "1990-02-14",
+        "gender": false,
+        "department": "Biology",
+        "email": "korinna@kalria.de",
+        "jdate": "2021-05-01"
+    },
+    {
+        "id": "s08",
+        "fname": "Karsten",
+        "lname": "Bauer",
+        "dob": "1990-02-02",
+        "gender": false,
+        "department": "Biology",
+        "email": "karsten@kalria.de",
+        "jdate": "2021-7-10"
+    },
+    {
+        "id": "s09",
+        "fname": "Vanessa",
+        "lname": "Gold",
+        "dob": "1990-02-12",
+        "gender": false,
+        "department": "Mathematics",
+        "email": "vanessa@kalria.de",
+        "jdate": "2021-11-03"
+    },
+    {
+        "id": "s10",
+        "fname": "Michelle",
+        "lname": "Holger",
+        "dob": "1990-01-14",
+        "gender": false,
+        "department": "IT",
+        "email": "michi@kalria.de",
+        "jdate": "2021-02-12"
+    },
+    {
+        "id": "s11",
+        "fname": "Christine",
+        "lname": "Wolf",
+        "dob": "1990-01-24",
+        "gender": false,
+        "department": "IT",
+        "email": "chris@kalria.de",
+        "jdate": "2021-06-20"
     }
 ]
