@@ -38,6 +38,7 @@ function loadJSON(callback)
 
 loadJSON(function(response) {
   var actual_SJON = JSON.parse(response);
+  console.log(actual_SJON);
 })
 
 /*
