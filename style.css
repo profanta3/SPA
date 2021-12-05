@@ -42,6 +42,21 @@ hr
     box-shadow: 0 0 5px rgba(128,128,128,.8); /** the shadow */
 }
 
+.table {
+    display: table;   /* Allow the centering to work */
+	margin: 0 auto;
+    display: inline-grid;
+}
+
+
+.person-view
+{
+    float: left;
+    list-style-type: none;
+    margin-right: 15px;
+    display: inline;
+}
+
 .button:hover
 {
     color: #F1FAEE;

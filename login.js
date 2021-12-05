@@ -119,6 +119,7 @@ function writeAdminPannel(layout=0)
   s += "<div id='addForm'></div>";
   s += "<div id='StudentLoginForm'></div>";
   s += "<div id='staff-list'></div>";
+  s += "<br><div id='filtered-list-placeholder'></div>";
   document.getElementById("login-pannel").innerHTML = s;
   if (layout == 0) //dafault admin layout
   {
@@ -141,7 +142,7 @@ function writeAdminStudentsMenu()
   s += "<button onclick='addNewStudentForm()' class='button'>Add Student</button>";
   s += "<button onclick='' class='button'>Update Student</button>";
   s += "<button onclick='' class='button'>Delete Student</button>";
-  s += "<div id='dropdown-placeholder'/>"; 
+  s += "<div id='dropdown-placeholder'/>";
   document.getElementById("backButtonPlaceholder").innerHTML = "<button onclick='writeAdminPannel()' class='button'>Home</button><br>";
   document.getElementById("admin-btns").innerHTML = s;
   displayList();
@@ -153,15 +154,14 @@ function writeAdminStudentsMenu()
 
   studentList.forEach((element, key) => {
     departments_set.add(element.getDepartment());
-    console.log("add: "+element.getDepartment());
+    //console.log("add: "+element.getDepartment());
   });
   if (departments_set.size < 1) {return;}
-  console.log(departments_set);
+  //console.log(departments_set);
 
   var selectList = document.createElement("select");
   selectList.id = "department-select-list";
   selectList.classList.add("input-box");
-  selectList.onchange = filterDepartmentStudenListOutput();
 
   var label = document.createElement("label");
   label.for = "department-select-list";
@@ -170,7 +170,6 @@ function writeAdminStudentsMenu()
   var selectListSemester = document.createElement("select");
   selectListSemester.id = "semester-select-list";
   selectListSemester.classList.add("input-box");
-  selectListSemester.onchange = filterSemesterStudenListOutput();
 
   var labelSemester = document.createElement("label");
   labelSemester.for = "semester-select-list";
@@ -200,14 +199,54 @@ function writeAdminStudentsMenu()
     option.text = semesterArray[i];
     selectListSemester.appendChild(option);
   }
+
+  //adding event listeners...
+  selectListSemester.addEventListener('change', filterSemesterStudenListOutput);
+  selectList.addEventListener('change', filterDepartmentStudentListOutput);
 }
 
-function filterDepartmentStudenListOutput() {
+function filterDepartmentStudentListOutput() {
   console.log("changed...");
+  
+  var opt = document.getElementById("department-select-list").options[document.getElementById("department-select-list").selectedIndex];
+  
+  var array = Array.from(studentList.values()).filter(student => student.department == opt.value);
+  console.log(array);
+
+  if (document.getElementById("table-div"))
+  {
+    document.getElementById("table-div").parentNode.removeChild(document.getElementById("table-div"));
+  }
+  var div = document.createElement("div");
+  div.classList.add("table");
+  div.id = "table-div";
+  
+  for (let i = 0; i < array.length; i++) {
+    
+    var list = document.createElement("ul");
+    list.classList.add("person-view");
+
+    //for (let j = 0; j < array[0]; j++) {
+      //}
+      
+    for(key in array[i])
+    {
+      var listItem = document.createElement("li");  
+      listItem.id = "student-view";
+      listItem.classList.add("person-view");
+      listItem.innerHTML = array[i][key];
+      list.appendChild(listItem);
+    }
+    
+    div.appendChild(list);
+    document.getElementById("filtered-list-placeholder").appendChild(div);
+  }
+
+  
 }
 
 function filterSemesterStudenListOutput() {
-  console.log("changed...");
+  //console.log("changed...");
 }
 
 function writeAdminStaffMenu()
@@ -330,6 +369,10 @@ function createStudentForm()
    }
    return true;
  }
+
+function generateListViewString() {
+  
+}
 
 /*
   Adds Stuff to the stuff_list with generated UID and PW
