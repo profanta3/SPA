@@ -18,6 +18,29 @@ var studentList = new Map();
 var staffList = new Map();
 
 /*
+  Load Students from JSON file...
+*/
+function loadJSON(callback)
+{
+
+  var xobj = new XMLHttpRequest();
+  xobj.overrideMimeType("application/json");
+  xobj.open('GET', 'students.json', true);
+  
+  xobj.onreadystatechange = function() {
+    if(xobj.readyState == 4 && xobj.status == "200" )
+    {
+      callback(xobj.responseText)
+    }
+  }
+  xobj.send();
+}
+
+loadJSON(function(response) {
+  var actual_SJON = JSON.parse(response);
+})
+
+/*
   Set boundaries for DOBs...
 */
 var yesterday = new Date();
@@ -121,6 +144,8 @@ function writeAdminStudentsMenu()
   var parent = document.getElementById("dropdown-placeholder");
 
   var departments_set = new Set();
+  departments_set.add("Select");
+
   studentList.forEach((element, key) => {
     departments_set.add(element.getDepartment());
     console.log("add: "+element.getDepartment());
@@ -129,8 +154,16 @@ function writeAdminStudentsMenu()
   console.log(departments_set);
   var selectList = document.createElement("select");
   selectList.id = "department-select-list";
+  selectList.classList.add("input-box");
+  selectList.onchange = filterStudenListOutput();
 
+  var label = document.createElement("label");
+  label.for = "department-select-list";
+  label.textContent = "Department";
+
+  parent.appendChild(label);
   parent.appendChild(selectList);
+
   var array = Array.from(departments_set);
 
   for (let i = 0; i < array.length; i++) {
@@ -139,6 +172,10 @@ function writeAdminStudentsMenu()
     option.text = array[i];
     selectList.appendChild(option);
   }
+}
+
+function filterStudenListOutput() {
+  console.log("changed...");
 }
 
 function writeAdminStaffMenu()

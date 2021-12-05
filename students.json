@@ -1,0 +1,32 @@
+[
+    {
+        "id": "s01",
+        "fname": "Karl",
+        "lname": "blumenthal",
+        "dob": "1990-02-14",
+        "gender": false,
+        "department": "IT",
+        "email": "karl@kalria.de",
+        "jdate": "2021-12-01"
+    },
+    {
+        "id": "s02",
+        "fname": "Kira",
+        "lname": "Mueller",
+        "dob": "1990-04-10",
+        "gender": false,
+        "department": "Biology",
+        "email": "kira@kalria.de",
+        "jdate": "2021-12-02"
+    },
+    {
+        "id": "s03",
+        "fname": "Andreas",
+        "lname": "Roter",
+        "dob": "1990-08-04",
+        "gender": false,
+        "department": "Mathematics",
+        "email": "andreas@kalria.de",
+        "jdate": "2021-12-03"
+    }
+]
