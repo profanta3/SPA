@@ -4,7 +4,7 @@
         "fname": "Karl",
         "lname": "Blumenthal",
         "dob": "1990-02-14",
-        "gender": false,
+        "gender": "male",
         "department": "IT",
         "email": "karl@kalria.de",
         "jdate": "2021-12-01"
@@ -14,7 +14,7 @@
         "fname": "Kira",
         "lname": "Mueller",
         "dob": "1990-04-10",
-        "gender": false,
+        "gender": "female",
         "department": "Biology",
         "email": "kira@kalria.de",
         "jdate": "2021-12-02"
@@ -24,7 +24,7 @@
         "fname": "Andreas",
         "lname": "Roter",
         "dob": "1990-08-04",
-        "gender": false,
+        "gender": "male",
         "department": "Mathematics",
         "email": "andreas@kalria.de",
         "jdate": "2021-12-03"
@@ -34,7 +34,7 @@
         "fname": "Lora",
         "lname": "Dreisst",
         "dob": "1990-01-14",
-        "gender": false,
+        "gender": "female",
         "department": "Biology",
         "email": "lora@kalria.de",
         "jdate": "2021-12-01"
@@ -44,7 +44,7 @@
         "fname": "Martin",
         "lname": "Specht",
         "dob": "1990-09-02",
-        "gender": false,
+        "gender": "male",
         "department": "IT",
         "email": "martin@kalria.de",
         "jdate": "2021-12-02"
@@ -54,7 +54,7 @@
         "fname": "Max",
         "lname": "Mustermann",
         "dob": "1990-01-01",
-        "gender": false,
+        "gender": "male",
         "department": "IT",
         "email": "max@kalria.de",
         "jdate": "2021-12-03"
@@ -64,7 +64,7 @@
         "fname": "Korinna",
         "lname": "Baum",
         "dob": "1990-02-14",
-        "gender": false,
+        "gender": "female",
         "department": "Biology",
         "email": "korinna@kalria.de",
         "jdate": "2021-05-01"
@@ -74,7 +74,7 @@
         "fname": "Karsten",
         "lname": "Bauer",
         "dob": "1990-02-02",
-        "gender": false,
+        "gender": "male",
         "department": "Biology",
         "email": "karsten@kalria.de",
         "jdate": "2021-07-10"
@@ -84,7 +84,7 @@
         "fname": "Vanessa",
         "lname": "Gold",
         "dob": "1990-02-12",
-        "gender": false,
+        "gender": "other",
         "department": "Mathematics",
         "email": "vanessa@kalria.de",
         "jdate": "2021-11-03"
@@ -94,7 +94,7 @@
         "fname": "Michelle",
         "lname": "Holger",
         "dob": "1990-01-14",
-        "gender": false,
+        "gender": "female",
         "department": "IT",
         "email": "michi@kalria.de",
         "jdate": "2021-02-12"
@@ -104,7 +104,7 @@
         "fname": "Christine",
         "lname": "Wolf",
         "dob": "1990-01-24",
-        "gender": false,
+        "gender": "female",
         "department": "IT",
         "email": "chris@kalria.de",
         "jdate": "2021-06-20"

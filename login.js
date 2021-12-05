@@ -210,13 +210,15 @@ function writeAdminStudentsMenu()
   }
 
   //adding event listeners...
-  selectListSemester.addEventListener('click', filterSemesterStudenListOutput);
-  selectList.addEventListener('click', filterDepartmentStudentListOutput);
-
   if(navigator.userAgent.indexOf("Safari") != -1)
   {
     selectListSemester.addEventListener('change', filterSemesterStudenListOutput);
     selectList.addEventListener('change', filterDepartmentStudentListOutput);
+  }
+  else 
+  {
+    selectListSemester.addEventListener('click', filterSemesterStudenListOutput);
+    selectList.addEventListener('click', filterDepartmentStudentListOutput);  
   }
 }
 
@@ -346,13 +348,25 @@ function createStudentForm()
     //console.log("ID: "+form.get("staff_id"));
 
     var today = new Date();
+    var gen_gender = "";
+    if (form.get("gender-male") == true)
+    {
+      gender = "male";
+    }
+    else if(form.get("gender-female") == true)
+    {
+      gender = "female"
+    }
+    else {
+      gender = "other";
+    }
 
     let new_student_raw = {
       id: form.get("student_id"),
       fname: form.get("fname"),
       lname: form.get("lname"),
       dob: form.get("student-dob"),
-      gender: form.get("gender-male"),
+      gender: gen_gender,
       department: form.get("department"),
       email: form.get("email_id"),
       jdate: wrapDate(today)
