@@ -169,6 +169,7 @@ function writeAdminStudentsMenu()
   var selectList = document.createElement("select");
   selectList.id = "department-select-list";
   selectList.classList.add("input-box");
+  selectList.classList.add("filter-box");
 
   var label = document.createElement("label");
   label.for = "department-select-list";
@@ -177,6 +178,7 @@ function writeAdminStudentsMenu()
   var selectListSemester = document.createElement("select");
   selectListSemester.id = "semester-select-list";
   selectListSemester.classList.add("input-box");
+  selectListSemester.classList.add("filter-box");
 
   var labelSemester = document.createElement("label");
   labelSemester.for = "semester-select-list";
@@ -210,7 +212,12 @@ function writeAdminStudentsMenu()
   //adding event listeners...
   selectListSemester.addEventListener('click', filterSemesterStudenListOutput);
   selectList.addEventListener('click', filterDepartmentStudentListOutput);
-  filterDepartmentStudentListOutput()
+
+  if(navigator.userAgent.indexOf("Safari") != -1)
+  {
+    selectListSemester.addEventListener('change', filterSemesterStudenListOutput);
+    selectList.addEventListener('change', filterDepartmentStudentListOutput);
+  }
 }
 
 

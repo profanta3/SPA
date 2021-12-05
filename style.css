@@ -69,6 +69,11 @@ hr
     background-color: #e63946;
 }
 
+.filter-box
+{
+    width: fit-content!important;
+}
+
 h1
 {
     color: #F1FAEE;
