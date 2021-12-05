@@ -29,7 +29,7 @@
         </div>
         <div id="main-collumn">
             <div id="login-pannel"></div>
-            <div id="StudentSignUpFormContainer">
+            <div class="SignUpFormContainer" id="StudentSignUpFormContainer">
                 <form class="SignUpForm" name="CreateStudentForm" id="cStudentForm" onsubmit="createStudentForm(this.form); this.reset(); return false;" method="post">
                     <h2>Sign Up a new Student</h2><br>
                     <label for="student_id">*Student ID:</label><br>
@@ -41,8 +41,8 @@
                     <label for="lname">Last Name:</label><br>
                     <input type="text" class="input-box" name="lname" id="lname"><br>
 
-                    <label for="dob">Date of Birth:</label><br>
-                    <input type="date" class="input-box" name="dob" id="dob"><br>
+                    <label for="student-dob">Date of Birth:</label><br>
+                    <input type="date" class="input-box" name="student-dob" id="student-dob"><br>
 
                     <label for="gender-radio">Gender:</label><br>
                     <label for="gender-male">Male</label>
@@ -66,11 +66,71 @@
                     <input type="reset" class="button" value="Cancel" onclick="writeAdminPannel(); writeAdminStudentsMenu();"/>
                 </form>
             </div>
+            <div class="SignUpFormContainer" id="StaffSignUpFormContainer">
+                <form class="SignUpForm" name="CreateStaffForm" id="cStaffForm" onsubmit="createStaffForm(this.form); this.reset(); return false;" method="post">
+                    <h2>Sign Up a new Staff</h2><br>
+                    <label for="student_id">*Staff ID:</label><br>
+                    <input type="text" class="input-box" name="staff_id" id="staff_id" required><br>
+
+                    <label for="fname">*First Name:</label><br>
+                    <input type="text" class="input-box" name="fname" id="fname" required><br>
+
+                    <label for="lname">Last Name:</label><br>
+                    <input type="text" class="input-box" name="lname" id="lname"><br>
+
+                    <label for="staff-dob">Date of Birth:</label><br>
+                    <input type="date" class="input-box" name="staff-dob" id="staff-dob"><br>
+
+                    <label for="gender-radio">Gender:</label><br>
+                    <label for="gender-male">Male</label>
+                    <input type="radio" selected="true" name="gender-radio" id="gender-male">
+                    <label for="gender-female">Female</label>
+                    <input type="radio" name="gender-radio" id="gender-female">
+                    <label for="gender-other">Other</label>
+                    <input type="radio" name="gender-radio" id="gender-other"><br>
+
+                    <label for="email_id">*Email ID:</label><br>
+                    <input type="text" class="input-box" name="email_id" id="email_id" required><br>
+
+                    <button type="submit" class="button signup-button" value="Submit">Bestätigen</button>
+                    <input type="reset" class="button" value="Cancel" onclick="writeAdminPannel(); writeAdminStaffMenu();"/>
+                </form>
+            </div>
         </div>
         <div id="debug-collumn">
             <button type="button" class="button" onclick="staffChanged('debug-list', true)">Debug Show Staff</button>
             <br>
             <div id="debug-list" class="debug-msg"></div>
+            <button id="dbugButton" class="button">Create Staff</button>
+            <script>
+                document.getElementById("dbugButton").addEventListener("click", foo);
+
+                let stf = {
+                    id: 's01',
+                    fname: 'Karl',
+                    sname: 'blume'
+                }
+
+                function foo()
+                {
+                    let a = Stff.from(stf);
+                    console.log("a: "+a.getName());
+                }
+
+                class Stff
+                {
+                    constructor() {}
+
+                    static from(json){
+                        return Object.assign(new Staff(), json);
+                    }
+
+                    getName()
+                    {
+                        return this.id + ", " + this.fname + ", " + this.sname;
+                    }
+                }
+            </script>
         </div>
     </div>
         

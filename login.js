@@ -15,6 +15,28 @@ var _last_staff_id = [];
 const staff_list = new Map();
 
 var studentList = new Map();
+var staffList = new Map();
+
+/*
+  Set boundaries for DOBs...
+*/
+var yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
+
+var date = wrapDate(yesterday);
+
+document.getElementById("student-dob").setAttribute("max", date);
+document.getElementById("staff-dob").setAttribute("max", date);
+
+document.getElementById("student-dob").setAttribute("value", date);
+document.getElementById("staff-dob").setAttribute("value", date);
+
+function wrapDate(date) {
+  return date.getFullYear() + '-'
+  + ('0' + (date.getMonth()+1)).slice(-2) + '-'
+  + ('0' + date.getDate()).slice(-2);
+}
+
 /*
   function to check userid & password
 */
@@ -82,6 +104,7 @@ function writeAdminPannel(layout=0)
     //document.getElementById("backButtonPlaceholder").innerHTML = "<button onclick='writeAdminPannel()' class='button'>Back</button><br>";
   }
   document.getElementById("StudentSignUpFormContainer").style.display = "None";
+  document.getElementById("StaffSignUpFormContainer").style.display = "None";
 }
 
 function writeAdminStudentsMenu()
@@ -92,13 +115,13 @@ function writeAdminStudentsMenu()
   s += "<button onclick='' class='button'>Delete Student</button>";
   document.getElementById("backButtonPlaceholder").innerHTML = "<button onclick='writeAdminPannel()' class='button'>Home</button><br>";
   document.getElementById("admin-btns").innerHTML = s;
-  displayStudents();
+  displayList();
 }
 
 function writeAdminStaffMenu()
 {
   var s = ""
-  s += "<button onclick='addStaff()' class='button'>Add Staff</button>";
+  s += "<button onclick='addNewStaffForm()' class='button'>Add Staff</button>";
   s += "<button onclick='' class='button'>Update Staff</button>";
   s += "<button onclick='' class='button'>Delete Staff</button>";
   document.getElementById("backButtonPlaceholder").innerHTML = "<button onclick='writeAdminPannel()' class='button'>Home</button><br>";
@@ -114,7 +137,14 @@ function addNewStudentForm()
   document.getElementById("StudentSignUpFormContainer").style.display = "Block";
 }
 
-
+/**
+ * Adds the Form for adding students
+ */
+ function addNewStaffForm()
+ {
+   writeAdminPannel(1);
+   document.getElementById("StaffSignUpFormContainer").style.display = "Block";
+ }
 
 /**
  * Called when a new student is added via the form
@@ -124,26 +154,78 @@ function createStudentForm()
     let form = new FormData(document.getElementById("cStudentForm"));
 
     console.log("ID: "+form.get("student_id"));
-    var s = new Student(form.get("student_id"), form.get("fname"), form.get("lname"), form.get("dob"), form.get("gender-male"), form.get("department"), form.get("email_id"));
+    var s = new Student(form.get("student_id"), form.get("fname"), form.get("lname"), form.get("student-dob"), form.get("gender-male"), form.get("department"), form.get("email_id"));
     studentList.set(form.get("student_id"), s);
 
     localStorage.setItem(form.get("student_id"), JSON.stringify(s))
     console.log(JSON.stringify(studentList));
     writeAdminPannel();
     writeAdminStudentsMenu();
-    displayStudents();
+    displayList();
 }
+
+/**
+ * Called when a new student is added via the form
+ */
+ function createStaffForm()
+ {
+    if (!validateStaffForm("cStaffForm"))
+    {
+      alert("Invalid DOB");
+      //return false;
+    }
+    let form = new FormData(document.getElementById("cStaffForm"));
+ 
+    console.log("ID: "+form.get("staff_id"));
+
+    let new_staff_raw = {
+      id: form.get("student_id"),
+      fname: form.get("fname"),
+      lname: form.get("lname"),
+      dob: form.get("staff-dob"),
+      gender: form.get("gender-male"),
+      email: form.get("email_id")
+    }
+
+    let new_staff = Staff.from(new_staff_raw);
+
+    //var s = new Student(form.get("student_id"), form.get("fname"), form.get("lname"), form.get("dob"), form.get("gender-male"), form.get("department"), form.get("email_id"));
+    staffList.set(new_staff_raw.id, new_staff);
+ 
+    localStorage.setItem(new_staff_raw.id, JSON.stringify(new_staff))
+    console.log(JSON.stringify(staffList));
+    writeAdminPannel();
+    writeAdminStaffMenu();
+    displayList(type="staff")
+ }
+
+ function validateStaffForm(form_id) {
+   var form = new FormData(document.getElementById(form_id));
+   //Age validation
+   var today = new Date();
+   var sel_date = new Date(form.get("staff-dob"))
+   var age = today.getFullYear - sel_date;
+   console.log("Age: "+age);
+   if(age<17)
+   {
+     return false;
+   }
+ }
 
 /*
   Adds Stuff to the stuff_list with generated UID and PW
 */
 function addStaff() {
+  let staff = {
+    
+  }
+  /*
   // Returns a random integer from 1 to 100:
   staff_id = "Staff-"+ id;
   staff_pw = "Stf-"+ id++ + "PW";
   staff_list.set(staff_id,staff_pw);
   _last_staff_id.push(staff_id);
-  staffChanged(_stf_lst_pannel_id);
+  staffChanged(_stf_lst_pannel_id);*/
 }
 
 /*
@@ -159,7 +241,7 @@ function deleteStaff() {
   staffChanged(_stf_lst_pannel_id);
 }
 
-function displayStudents()
+function displayList(type="student")
 {
   if(studentList.size == 0)
   {
@@ -182,8 +264,14 @@ function displayStudents()
   {
     console.log("Student list not empty...");
   }
-
-  s = "|\tStudent ID\t|\tFirst Name\t|\tEmail\t|<br>";
+  if(type == "staff")
+  {
+    s = "|\tSaff ID\t|\tFirst Name\t|\tEmail\t|<br>";
+  }
+  else
+  {
+    s = "|\tStudent ID\t|\tFirst Name\t|\tEmail\t|<br>";
+  }
 
   for (const [key, student] of studentList) {
     s += "|\t" + key+ "\t|\t" + student.getFName() + "\t|\t" + student.getEMail() +"\t|<br>";
@@ -191,6 +279,8 @@ function displayStudents()
 
   document.getElementById(_stf_lst_pannel_id).innerHTML = "<hr><br><code>"+s+"</code>";
 }
+
+
 
 /*
   Updates stuff list
@@ -229,6 +319,27 @@ function writeStaffPannel(_id, staff_name)
   "<hr><h2>Staff panel</h2><hr><br>Hello " + staff_name + "";
 }
 
+class Staff
+{
+  constructor() {}
+
+  static from(json){
+    return Object.assign(new Staff(), json);
+  }
+
+  getID() { return this.id; }
+
+  getFName() { return this.fname; }
+
+  getLName() { return this.lname; }
+
+  getDOB() { return this.dob; }
+
+  getGender() { return this.gender; }
+
+  getEMail() { return this.email; }
+}
+
 class Student
 {
     constructor(id, fname, lname, dob, gender, department, email)
@@ -240,6 +351,10 @@ class Student
         this.gender = gender;
         this.department = department;
         this.email = email;
+    }
+
+    static from(json){
+      return Object.assign(new Student(), json);
     }
 
     getFName() {

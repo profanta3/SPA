@@ -134,7 +134,7 @@ header {
     width: 80%;
 }
 
-#StudentSignUpFormContainer
+.SignUpFormContainer
 {
     display: none;
     box-shadow: 0 0 10px rgba(128,128,128,.8); /** the shadow */
