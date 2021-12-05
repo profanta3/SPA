@@ -87,7 +87,9 @@ document.getElementById("staff-dob").setAttribute("max", date);
 document.getElementById("student-dob").setAttribute("value", date);
 document.getElementById("staff-dob").setAttribute("value", date);
 
-
+/**
+ * wrap date tp String like: "YYYY-MM-DD" with leading zeros
+ */
 function wrapDate(date) {
   return date.getFullYear() + '-'
   + ('0' + (date.getMonth()+1)).slice(-2) + '-'
@@ -128,6 +130,9 @@ function check(form)
     alert("Login Credentials Incorrect.")
 }
 
+/**
+ * called when logout is clicked
+ */
 function logout()
 {
   document.getElementById("login-form").style.display = "initial";
@@ -165,6 +170,9 @@ function writeAdminPannel(layout=0)
   document.getElementById("StaffSignUpFormContainer").style.display = "None";
 }
 
+/*
+  Writes the Admin Panel for Managing the Students
+*/
 function writeAdminStudentsMenu()
 {
   var s = ""
@@ -175,6 +183,7 @@ function writeAdminStudentsMenu()
   document.getElementById("backButtonPlaceholder").innerHTML = "<button onclick='writeAdminPannel()' class='button'>Home</button><br>";
   document.getElementById("admin-btns").innerHTML = s;
   
+  //select the parent object on which we will append the new generated Dropwdowns
   var parent = document.getElementById("dropdown-placeholder");
 
   var filter_heading = document.createElement("h2");
@@ -183,17 +192,16 @@ function writeAdminStudentsMenu()
   parent.appendChild(document.createElement("hr"));
   parent.appendChild(filter_heading);
 
-
+  //create a set containing all departments set -> eliminate duplicates
   var departments_set = new Set();
-  departments_set.add("All");
+  departments_set.add("All"); //default value
 
   studentList.forEach((element, key) => {
     departments_set.add(element.getDepartment());
-    //console.log("add: "+element.getDepartment());
   });
   if (departments_set.size < 1) {return;}
-  //console.log(departments_set);
 
+  //create drop down for the Department filtering
   var selectList = document.createElement("select");
   selectList.id = "department-select-list";
   selectList.classList.add("input-box");
@@ -203,6 +211,7 @@ function writeAdminStudentsMenu()
   label.for = "department-select-list";
   label.textContent = "Department";
 
+  //create drop down for the Semester filtering
   var selectListSemester = document.createElement("select");
   selectListSemester.id = "semester-select-list";
   selectListSemester.classList.add("input-box");
@@ -218,6 +227,7 @@ function writeAdminStudentsMenu()
   parent.appendChild(label);
   parent.appendChild(selectList);
 
+  //Add the options to the department drop down selection
   var array = Array.from(departments_set);
 
   for (let i = 0; i < array.length; i++) {
@@ -227,8 +237,8 @@ function writeAdminStudentsMenu()
     selectList.appendChild(option);
   }
 
+  //add the Semester options to the Semester drop down selection
   var semesterArray = ["Select", "Fall", "Summer", "Winter"];
-
 
   for (let i = 0; i < semesterArray.length; i++) {
     var option = document.createElement("option");
@@ -240,6 +250,7 @@ function writeAdminStudentsMenu()
   //adding event listeners...
   if(navigator.userAgent.indexOf("Safari") != -1)
   {
+    //Safari doesnt like 'click' event listeners so i used 'change'
     selectListSemester.addEventListener('change', filterSemesterStudenListOutput);
     selectList.addEventListener('change', filterDepartmentStudentListOutput);
   }
@@ -248,28 +259,40 @@ function writeAdminStudentsMenu()
     selectListSemester.addEventListener('click', filterSemesterStudenListOutput);
     selectList.addEventListener('click', filterDepartmentStudentListOutput);  
   }
+  //init first 'All' selection to show whole Data set when loading the site
   filterDepartmentStudentListOutput();
 }
 
+/**
+ * Apply a filter on the students list based on the selected option in the drop down
+ */
 function filterDepartmentStudentListOutput() {
-  
+
+  //get the selected option from Department selection
   var opt = document.getElementById("department-select-list").options[document.getElementById("department-select-list").selectedIndex];
   
   if (opt.value != "All") {
+    //only take these students of which the departments equals the selected department...
     var array = Array.from(studentList.values()).filter(student => student.department == opt.value);
   } 
   else {
     var array = Array.from(studentList.values());
   }
 
-  outputFilteredStudents(array);
+  outputFilteredStudents(array); //eg print the filtered list of students
 }
 
+/**
+ * Apply a filter on the students list based on the selected option in the drop down
+ */
 function filterSemesterStudenListOutput() {
+  //get the selected option from Department selection
   var opt = document.getElementById("semester-select-list").options[document.getElementById("semester-select-list").selectedIndex];
 
   var array = Array.from(studentList.values()).filter((student) => {
+    //split the date by taking out the dashes -> '2021-01-02' becomes ["2021","01","02"]
     var d = parseInt(student.jdate.split('-')[1]);
+
     if ((d >= 10 || d <= 2) && opt.value == "Winter")
     {
       return true;
@@ -279,21 +302,26 @@ function filterSemesterStudenListOutput() {
       return true;
     }
     else {
+      //What was the purpose of the Fall option? @khritiga
       return false;
     }
   })
   
-  outputFilteredStudents(array);
+  outputFilteredStudents(array); //eg print the filtered list of students
 }
 
+/**
+ * Print out the Array containing students
+ */
 function outputFilteredStudents(students)
 {
   array = students;
 
-  if (document.getElementById("table-div"))
+  if (document.getElementById("table-div")) //clear the list if one already exists...
   {
     document.getElementById("table-div").parentNode.removeChild(document.getElementById("table-div"));
   }
+  //create the placeholder for the list
   var div = document.createElement("div");
   div.classList.add("table");
   div.id = "table-div";
@@ -331,15 +359,19 @@ function outputFilteredStudents(students)
   }
 }
 
+/*
+  Writes the Admin Panel for Managing the staffs
+*/
 function writeAdminStaffMenu()
 {
   var s = ""
   s += "<button onclick='addNewStaffForm()' class='button'>Add Staff</button>";
   s += "<button onclick='' class='button'>Update Staff</button>";
-  s += "<button onclick='' class='button'>Delete Staff</button>";
+  s += "<button onclick='deleteStaff' class='button'>Delete Staff</button>";
   document.getElementById("backButtonPlaceholder").innerHTML = "<button onclick='writeAdminPannel()' class='button'>Home</button><br>";
   document.getElementById("admin-btns").innerHTML = s;
 
+  //Print the staffs
   outputFilteredStudents(Array.from(staffList.values()));
 }
 
@@ -348,6 +380,7 @@ function writeAdminStaffMenu()
  */
 function addNewStudentForm()
 {
+  //make the form visible
   writeAdminPannel(1);
   document.getElementById("StudentSignUpFormContainer").style.display = "Block";
 }
@@ -357,6 +390,7 @@ function addNewStudentForm()
  */
  function addNewStaffForm()
  {
+   //make the form visible
    writeAdminPannel(1);
    document.getElementById("StaffSignUpFormContainer").style.display = "Block";
  }
@@ -377,16 +411,16 @@ function createStudentForm()
 
     var today = new Date();
     var gen_gender = "";
-    if (form.get("gender-male") == true)
+    if (form.get("gender-male") == "male")
     {
-      gender = "male";
+      gen_gender = "male";
     }
-    else if(form.get("gender-female") == true)
+    else if(form.get("gender-female") == "female")
     {
-      gender = "female"
+      gen_gender = "female"
     }
     else {
-      gender = "other";
+      gen_gender = "other";
     }
 
     let new_student_raw = {
@@ -428,18 +462,19 @@ function createStudentForm()
 
     var today = new Date();
     var gen_gender = "";
-    if (form.get("gender-male") == true)
+    if (form.get("gender-male") == "male")
     {
-      gender = "male";
+      gen_gender = "male";
     }
-    else if(form.get("gender-female") == true)
+    else if(form.get("gender-female") == "female")
     {
-      gender = "female"
+      gen_gender = "female"
     }
     else {
-      gender = "other";
+      gen_gender = "other";
     }
 
+    //create a staff var with all attributes
     let new_staff_raw = {
       id: form.get("staff_id"),
       fname: form.get("fname"),
@@ -450,14 +485,12 @@ function createStudentForm()
       jdate: wrapDate(today)
     }
     
+    //store the staff var in a Staff object
     let new_staff = Staff.from(new_staff_raw);
 
-    //var s = new Student(form.get("student_id"), form.get("fname"), form.get("lname"), form.get("dob"), form.get("gender-male"), form.get("department"), form.get("email_id"));
     staffList.set(new_staff_raw.id, new_staff);
- 
-    localStorage.setItem("staff", JSON.stringify(new_staff))
-    console.log(JSON.stringify(staffList));
-    console.log(JSON.stringify(new_staff));
+    
+    //localStorage.setItem("staff", JSON.stringify(new_staff)) - purpose of client side serialization
     writeAdminPannel();
     writeAdminStaffMenu();
  }
@@ -466,7 +499,7 @@ function createStudentForm()
    var form = new FormData(document.getElementById(form_id));
    //Age validation
    var today = new Date();
-   var sel_date = new Date(form.get("staff-dob")).getFullYear();
+   var sel_date = new Date(form.get("dob")).getFullYear();
    var age = parseInt(today.getFullYear()) - parseInt(sel_date);
    if(age<17 || age>60)
    {
@@ -475,22 +508,6 @@ function createStudentForm()
    }
    return true;
  }
-
-/*
-  Adds Stuff to the stuff_list with generated UID and PW
-*/
-function addStaff() {
-  let staff = {
-    
-  }
-  /*
-  // Returns a random integer from 1 to 100:
-  staff_id = "Staff-"+ id;
-  staff_pw = "Stf-"+ id++ + "PW";
-  staff_list.set(staff_id,staff_pw);
-  _last_staff_id.push(staff_id);
-  staffChanged(_stf_lst_pannel_id);*/
-}
 
 /*
   Deletes the last stuff from stuff_list taht was created
@@ -503,43 +520,6 @@ function deleteStaff() {
   staff_list.delete(_last_staff_id.pop());
   id--;
   staffChanged(_stf_lst_pannel_id);
-}
-
-/*
-  Updates stuff list
-*/
-function staffChanged(cont, debug=false)
-{
-  s = "|\tStudent ID\t|\tFirst Name\t|\tEmail\t|<br>";
-
-
-  for (const [key, value] of staff_list) {
-    s += "|\t" + key+ "\t|\t" +value + "\t|<br>";
-  }
-  if(debug)
-  {
-    if(document.getElementById(cont).innerHTML.length == 0)
-    {
-      document.getElementById(cont).innerHTML = "<code id='debug-msg'>"+s+"</code>";
-    }
-    else
-    {
-      document.getElementById(cont).innerHTML = "";
-    }
-  }
-  else
-  {
-    document.getElementById(cont).innerHTML = "<hr><br><code>"+s+"</code>";
-  }
-}
-
-/*
-  Writes the Staff panel into the main html page
-*/
-function writeStaffPannel(_id, staff_name)
-{
-  document.getElementById(_id).innerHTML = 
-  "<hr><h2>Staff panel</h2><hr><br>Hello " + staff_name + "";
 }
 
 class Staff
