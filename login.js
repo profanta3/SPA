@@ -172,21 +172,24 @@ function createStudentForm()
     if (!validateStaffForm("cStaffForm"))
     {
       alert("Invalid DOB");
-      //return false;
+      return true;
     }
     let form = new FormData(document.getElementById("cStaffForm"));
  
-    console.log("ID: "+form.get("staff_id"));
+    //console.log("ID: "+form.get("staff_id"));
+
+    var today = new Date();
 
     let new_staff_raw = {
-      id: form.get("student_id"),
+      id: form.get("staff_id"),
       fname: form.get("fname"),
       lname: form.get("lname"),
       dob: form.get("staff-dob"),
       gender: form.get("gender-male"),
-      email: form.get("email_id")
+      email: form.get("email_id"),
+      jdate: wrapDate(today)
     }
-
+    
     let new_staff = Staff.from(new_staff_raw);
 
     //var s = new Student(form.get("student_id"), form.get("fname"), form.get("lname"), form.get("dob"), form.get("gender-male"), form.get("department"), form.get("email_id"));
@@ -194,6 +197,7 @@ function createStudentForm()
  
     localStorage.setItem(new_staff_raw.id, JSON.stringify(new_staff))
     console.log(JSON.stringify(staffList));
+    console.log(JSON.stringify(new_staff));
     writeAdminPannel();
     writeAdminStaffMenu();
     displayList(type="staff")
@@ -203,13 +207,14 @@ function createStudentForm()
    var form = new FormData(document.getElementById(form_id));
    //Age validation
    var today = new Date();
-   var sel_date = new Date(form.get("staff-dob"))
-   var age = today.getFullYear - sel_date;
-   console.log("Age: "+age);
-   if(age<17)
+   var sel_date = new Date(form.get("staff-dob")).getFullYear();
+   var age = parseInt(today.getFullYear()) - parseInt(sel_date);
+   if(age<17 || age>60)
    {
-     return false;
+      console.log("age: "+age);
+      return false;
    }
+   return true;
  }
 
 /*
@@ -245,7 +250,7 @@ function displayList(type="student")
 {
   if(studentList.size == 0)
   {
-    if(localStorage.length > 0)
+    /*if(localStorage.length > 0)
     {
       
       for (let i = 0; i < localStorage.length; i++) {
@@ -258,7 +263,7 @@ function displayList(type="student")
     else 
     {
       console.log("Loal storage empty...");
-    }
+    }*/
   }
   else 
   {
@@ -266,16 +271,20 @@ function displayList(type="student")
   }
   if(type == "staff")
   {
-    s = "|\tSaff ID\t|\tFirst Name\t|\tEmail\t|<br>";
+    s = "|\tSaff ID\t|\tFirst Name\t|\tLast Name\t|\tDOB\t|\tGender\t|\tEmail\t|\tJoining Date\t|<br>";
+    for (const [key, staff] of staffList) {
+      s += "|\t" + key + "\t|\t" + staff.getFName() + "\t|\t" + staff.getLName() + "\t|\t" + staff.getDOB() + "\t|\t" + staff.getGender() + "\t|\t" + staff.getEMail() + "\t|\t" + staff.getJDate() + "\t|<br>";
+    }
   }
   else
   {
-    s = "|\tStudent ID\t|\tFirst Name\t|\tEmail\t|<br>";
+    s = "|\Student ID\t|\tFirst Name\t|\tLast Name\t|\tDOB\t|\tGender\t|\tEmail\t|\tJoining Date\t|<br>";
+    for (const [key, student] of studentList) {
+      s += "|\t" + key + "\t|\t" + student.getFName() + "\t|\t" + student.getLName() + "\t|\t" + student.getDOB() + "\t|\t" + student.getGender() + "\t|\t" + student.getEMail() + "\t|\t" + student.getJDate() + "\t|<br>";
+    }
   }
 
-  for (const [key, student] of studentList) {
-    s += "|\t" + key+ "\t|\t" + student.getFName() + "\t|\t" + student.getEMail() +"\t|<br>";
-  }
+  
 
   document.getElementById(_stf_lst_pannel_id).innerHTML = "<hr><br><code>"+s+"</code>";
 }
@@ -338,56 +347,31 @@ class Staff
   getGender() { return this.gender; }
 
   getEMail() { return this.email; }
+
+  getJDate() { return this.jdate; }
 }
 
 class Student
 {
-    constructor(id, fname, lname, dob, gender, department, email)
-    {
-        this.id = id;
-        this.fname = fname;
-        this.lname = lname;
-        this.dob = dob;
-        this.gender = gender;
-        this.department = department;
-        this.email = email;
-    }
+    constructor() {}
 
     static from(json){
       return Object.assign(new Student(), json);
     }
 
-    getFName() {
-      return this.fname;
-    }
+    getID() { return this.id; }
 
-    getID()
-    {
-      return this.id;
-    }
+    getFName() { return this.fname; }
 
-    getLName()
-    {
-      return this.lname;
-    }
+    getLName() { return this.lname; }
 
-    getDOB()
-    {
-      return this.dob;
-    }
+    getDOB() { return this.dob; }
 
-    getGender()
-    {
-      return this.gender;
-    }
+    getGender() { return this.gender; }
 
-    getDepartment()
-    {
-      return this.department;
-    }
+    getEMail() { return this.email; }
 
-    getEMail()
-    {
-      return this.email;
-    }
-}
+    getDepartment() { return this.department; }
+
+    getJDate() { return this.jdate; }
+  }
