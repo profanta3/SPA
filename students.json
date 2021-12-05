@@ -2,7 +2,7 @@
     {
         "id": "s01",
         "fname": "Karl",
-        "lname": "blumenthal",
+        "lname": "Blumenthal",
         "dob": "1990-02-14",
         "gender": false,
         "department": "IT",
@@ -27,6 +27,36 @@
         "gender": false,
         "department": "Mathematics",
         "email": "andreas@kalria.de",
+        "jdate": "2021-12-03"
+    },
+    {
+        "id": "s04",
+        "fname": "Lora",
+        "lname": "Dreisst",
+        "dob": "1990-01-14",
+        "gender": false,
+        "department": "Biology",
+        "email": "lora@kalria.de",
+        "jdate": "2021-12-01"
+    },
+    {
+        "id": "s05",
+        "fname": "Martin",
+        "lname": "Specht",
+        "dob": "1990-09-02",
+        "gender": false,
+        "department": "IT",
+        "email": "martin@kalria.de",
+        "jdate": "2021-12-02"
+    },
+    {
+        "id": "s06",
+        "fname": "Max",
+        "lname": "Mustermann",
+        "dob": "1990-01-01",
+        "gender": false,
+        "department": "IT",
+        "email": "max@kalria.de",
         "jdate": "2021-12-03"
     }
 ]

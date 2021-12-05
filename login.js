@@ -23,22 +23,26 @@ var staffList = new Map();
 function loadJSON(callback)
 {
 
-  var xobj = new XMLHttpRequest();
-  xobj.overrideMimeType("application/json");
-  xobj.open('GET', 'students.json', true);
+  var xhr = new XMLHttpRequest();
+  xhr.overrideMimeType("application/json");
+  xhr.open('GET', 'https://raw.githubusercontent.com/profanta3/SPA/main/students.json', true);
   
-  xobj.onreadystatechange = function() {
-    if(xobj.readyState == 4 && xobj.status == "200" )
+  xhr.onreadystatechange = function() {
+    if(xhr.readyState == 4 && xhr.status == "200" )
     {
-      callback(xobj.responseText)
+      callback(xhr.responseText)
     }
   }
-  xobj.send();
+  xhr.send();
 }
 
 loadJSON(function(response) {
-  var actual_SJON = JSON.parse(response);
-  console.log(actual_SJON);
+  var actual_JSON = JSON.parse(response);
+  console.log(actual_JSON);
+  for (let i = 0; i < actual_JSON.length; i++) {
+    let new_student = Student.from(actual_JSON[i])
+    studentList.set(actual_JSON[i].id, new_student);
+  }
 })
 
 /*
@@ -153,15 +157,28 @@ function writeAdminStudentsMenu()
   });
   if (departments_set.size < 1) {return;}
   console.log(departments_set);
+
   var selectList = document.createElement("select");
   selectList.id = "department-select-list";
   selectList.classList.add("input-box");
-  selectList.onchange = filterStudenListOutput();
+  selectList.onchange = filterDepartmentStudenListOutput();
 
   var label = document.createElement("label");
   label.for = "department-select-list";
   label.textContent = "Department";
 
+  var selectListSemester = document.createElement("select");
+  selectListSemester.id = "semester-select-list";
+  selectListSemester.classList.add("input-box");
+  selectListSemester.onchange = filterSemesterStudenListOutput();
+
+  var labelSemester = document.createElement("label");
+  labelSemester.for = "semester-select-list";
+  labelSemester.textContent = "Semester";
+
+  parent.appendChild(labelSemester);
+  parent.appendChild(selectListSemester);
+  parent.appendChild(document.createElement("br"));
   parent.appendChild(label);
   parent.appendChild(selectList);
 
@@ -173,9 +190,23 @@ function writeAdminStudentsMenu()
     option.text = array[i];
     selectList.appendChild(option);
   }
+
+  var semesterArray = ["Select", "Fall", "Summer", "Winter"];
+
+
+  for (let i = 0; i < semesterArray.length; i++) {
+    var option = document.createElement("option");
+    option.value = semesterArray[i];
+    option.text = semesterArray[i];
+    selectListSemester.appendChild(option);
+  }
 }
 
-function filterStudenListOutput() {
+function filterDepartmentStudenListOutput() {
+  console.log("changed...");
+}
+
+function filterSemesterStudenListOutput() {
   console.log("changed...");
 }
 
