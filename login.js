@@ -284,9 +284,10 @@ function displayList(type="student")
     }
   }
 
-  
-
   document.getElementById(_stf_lst_pannel_id).innerHTML = "<hr><br><code>"+s+"</code>";
+
+  var fs = require('fs');
+  fs.writeFile('staffs.json', json, 'utf8', callback);
 }
 
 
