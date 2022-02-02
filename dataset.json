@@ -1,0 +1,39 @@
+{
+    "mountains": [
+        {
+            "id": 1,
+            "name": "Kordilleren Südamerikas",
+            "imageUrl": "https://cdn.pixabay.com/photo/2017/02/14/03/03/ama-dablam-2064522_960_720.jpg",
+            "place": "Südamerika",
+            "length": 9600
+        },
+        {
+            "id": 2,
+            "name": "Pazifische Küstengebirge in Nordamerika",
+            "imageUrl": "https://cdn.pixabay.com/photo/2015/07/27/17/14/mountains-862870_960_720.jpg",
+            "place": "Nordamerika",
+            "length": 6700
+        },
+        {
+            "id": 3,
+            "name": "Innere Kordilleren Nordamerikas",
+            "imageUrl": "https://cdn.pixabay.com/photo/2013/10/02/23/03/mountains-190055_960_720.jpg",
+            "place": "Nordamerika",
+            "length": 6400
+        },
+        {
+            "id": 4,
+            "name": "Hindukusch-Karakorum-Himalaya-Kette",
+            "imageUrl": "https://cdn.pixabay.com/photo/2014/10/07/13/48/mountain-477832_960_720.jpg",
+            "place": "Nördl. Indischer Subkontinent",
+            "length": 5600
+        },
+        {
+            "id": 5,
+            "name": "Altun-Qilian-Kunlun-Kette",
+            "imageUrl": "https://cdn.pixabay.com/photo/2015/04/23/22/01/mountains-736886_960_720.jpg",
+            "place": "Tadschikistan, West- u. Zentral-China",
+            "length": 4900
+        }
+    ]
+}
